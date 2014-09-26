@@ -1,0 +1,4 @@
+<%
+session.remove("person_id");
+response.sendRedirect("index.jag");
+%>

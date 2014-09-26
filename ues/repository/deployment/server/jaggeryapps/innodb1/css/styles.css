@@ -1,0 +1,633 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,300);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,600,300);
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans);
+@import url(http://fonts.googleapis.com/css?family=Audiowide);
+@import url(http://fonts.googleapis.com/css?family=Bree+Serif);
+
+
+body {
+	margin: 0px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	background-color:#F2F2F2;
+}
+div.header-div{
+	background: #5F9EA0;
+	background: -moz-linear-gradient(270deg, #3FB0BF 0%, #060B2E 100%); /* ff3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3FB0BF), color-stop(100%, #060B2E)); /* safari4+,chrome */
+	background: -webkit-linear-gradient(270deg, #3FB0BF 0%, #060B2E 100%); /* safari5.1+,chrome10+ */
+	background: -o-linear-gradient(270deg, #3FB0BF 0%, #060B2E 100%); /* opera 11.10+ */
+	background: -ms-linear-gradient(270deg, #3FB0BF 0%, #060B2E 100%); /* ie10+ */
+	background: linear-gradient(180deg, #3FB0BF 0%, #060B2E 100%); /* w3c */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3FB0BF', endColorstr='#060B2E',GradientType=0 ); /* ie6-9 */
+
+}
+table.header-table{
+	width: 970px;
+	margin: auto;
+}
+div.title-div{
+	font-family: 'Ubuntu',sans-serif;
+	font-size: 1.8em;
+	font-weight: 300;
+	text-align: center;
+	text-shadow: 0 -1px 1px #000000;
+	color: #ffffff;
+
+}
+div.content-div{
+	/* background-color: #FFFFFF; */
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+}
+table.content-table{
+	width: 100%;
+	margin: auto;
+	border-collapse: collapse;
+}
+div.left-menu-div{
+	width: 240px;
+	padding-top: 5px;
+	float: left;
+}
+div.right-content-div{
+	width: 750px;
+	padding: 5px;
+	float: left;
+}
+#area{
+	font-size: 16px;
+	height: 26px;
+}
+div.draw-area{
+	/* margin: 5px; */
+}
+
+#rightDivPlaces{
+	position: relative;
+}
+
+#sri-lanka-map-area{
+	position: absolute;
+	width: 440px;
+	height: 550px;
+	/*left: 5px;
+	top: 5px;*/
+	/*border: 1px solid red;*/
+}
+
+#top-institutions-area{
+	position: absolute;
+	width: 380px;
+	height: 500px;
+	left: 410px;
+	top: 5px;
+	/*border: 1px solid black;*/
+}
+
+#rightDivPosition{
+	position: relative;
+}
+
+#region-map-area{
+	position: absolute;
+	width: 320px;
+	height: 320px;
+	left: 5px;
+	top: 35px;
+}
+
+#radar-chart{
+	position: absolute;
+	width: 450px;
+	height: 320px;
+	left: 330px;
+	top: 35px;
+}
+
+p.regiontip-para{
+	text-align: justify;
+}
+
+img.regiontip-image{
+	float: left;
+	margin: 5px 10px 5px 0px;
+}
+
+.axis text {
+	font: 10px sans-serif;
+}
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.x.axis path {
+	/*display: none;*/
+}
+
+.line {
+	fill: none;
+	stroke: steelblue;
+	stroke-width: 3px; /* 5px */
+}
+
+.rule line {
+	stroke: #dddddd;
+	shape-rendering: crispEdges;
+}
+
+/* bar chart */
+/*
+.bar {
+	fill: steelblue;
+}
+.bar:hover {
+	fill: brown;
+}
+*/
+#tooltip {
+	position: absolute;
+	/*width: 200px;*/
+	height: auto;
+	padding: 10px;
+	background-color: black;
+	color: white;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	pointer-events: none;
+	font-size: 12px;
+}
+
+#tooltip2 {
+    position: absolute;
+    background: black;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: lighter;
+    /*padding: 9px 11px 0px 11px;*/
+    display: none;
+    z-index: 100 !important;
+    /*width: 165px;*/
+    /*min-height: 80px;*/
+    
+    /*-webkit-box-shadow: 1px 1px 1px 0px #000;
+	-moz-box-shadow: 1px 1px 1px 0px #000;
+    box-shadow: 1px 1px 1px 0px #000;*/
+    pointer-events: none;
+    -webkit-border-radius: 5px 5px 5px 0px;
+	-moz-border-radius: 5px 5px 5px 0px;
+	border-radius: 5px 5px 5px 0px;
+}
+
+#tooltip2.right {
+	/*-webkit-box-shadow: -1px 1px 1px 0px #000;
+	-moz-box-shadow: -1px 1px 1px 0px #000;
+    box-shadow: -1px 1px 1px 0px #000;*/
+}
+#tooltip2.right svg {
+    /*left: auto;
+    right: 0px;*/
+}
+#tooltip2 svg {
+    position: absolute;
+    /*display: inline;
+    float: right;
+    left: 0px;
+    right: auto;*/
+    /*top: -13px;*/
+    width: 100px;
+    height: 100px;
+}
+#tooltip2 #tooltip-triangle {
+    background: black;
+    fill: rgba(0, 0, 0, 0.8);
+}
+#tooltip2 .value .value-part {
+    font-size: 32px;
+    vertical-align: top;
+    position: relative;
+    /*top: -3px;*/
+}
+#tooltip2 .tooltip-content{
+	padding: 9px 11px 0px 11px;
+}
+
+/* start - override bootstrap settings */
+.panel-heading{
+	padding: 5px 15px;
+}
+
+.panel-body{
+	padding: 5px 15px;
+}
+
+.panel-title {
+    font-size: 14px;
+}
+
+.position-gi-selection {
+	font-size: 16px;
+	margin: 0px;
+	padding: 6px;
+	height: 36px;
+}
+
+.position-gi-selection option {
+	margin: 0px;
+	padding: 6px;
+}
+
+/* end - override bootstrap settings */
+
+
+/* @group left */
+#userStats { 
+	display: block; 
+	width: 100%; 
+	/*background-color: #CDCDCD;#30943D;#009966 */ 
+   /*  background: -moz-linear-gradient(270deg, #31A122 0%, #02750A 100%); ff3.6+
+   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #31A122), color-stop(100%, #02750A)); safari4+,chrome
+   background: -webkit-linear-gradient(270deg, #31A122 0%, #02750A 100%); safari5.1+,chrome10+
+   background: -o-linear-gradient(270deg, #31A122 0%, #02750A 100%); opera 11.10+
+   background: -ms-linear-gradient(270deg, #31A122 0%, #02750A 100%); ie10+
+   background: linear-gradient(180deg, #31A122 0%, #02750A 100%); w3c
+   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#31A122', endColorstr='#02750A',GradientType=0 ); ie6-9
+    */
+	/* border: 1px solid #45463d;*/
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px; 
+	height: 70px;
+}
+
+#userStats .pic { 
+	float: left; 
+	display: block; 
+	margin-left: 5px;
+	margin-top: 5px;
+	border: 1px solid #45463d;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+}
+#userStats .pic a img { 
+	background: #fff; 
+	border: 1px solid #ccc; 
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+	padding: 2px;
+}
+
+#userStats .data { 
+	float: left; 
+	display: block; 
+	position:  relative; 
+	width: 700px; 
+	height: 68px; 
+	padding: 4px; 
+	padding-left: 15px; 
+	overflow: hidden; 
+    
+   
+	box-sizing: border-box; 
+	-moz-box-sizing: border-box; 
+}
+#userStats .data h1 { 
+	color: #333; 
+	line-height: 0.1em; 
+	/* text-shadow: 0px 1px 1px #000000; */ 
+}
+#userStats .data h3 {
+	line-height: 0.9em; 
+	padding-bottom: 7px; 
+	font-size: 20px;
+	color: #333;
+	margin-top: 5px;
+	/* text-shadow:0 -1px 1px #000000; */
+	border-bottom: 1px solid #333; 
+	font-weight: 400;
+	margin-bottom: 3px;
+}
+#userStats .data h4 { 
+	font-size: 1.2em; 
+	line-height: 1.0em; 
+}
+
+#userStats .data .sep { 
+	clear: both; 
+	margin-top: 40px; 
+	width: 320px; 
+	height: 1px; 
+	border-bottom: 1px solid #ccc; 
+	margin-bottom: 0; 
+}
+#userStats .data ul.numbers { 
+	list-style: none; 
+	margin-top: 0; 
+	color: #333;
+	padding-left: 100px;
+}
+#userStats .data ul.numbers li { 
+	float: left; 
+	display: block; 
+	padding-left: 15px;  
+	border-right: 1px dotted #bbb; 
+	text-transform: uppercase; 
+	font-size: 11px;
+	padding-right: 10px;
+}
+#userStats .data ul.numbers li strong { 
+	color: #333; 
+	font-size: 1.8em; 
+	line-height: 1em; 
+	font-weight: bold; 
+	text-align: center;
+	vertical-align: -3px;
+	/* text-shadow:0 -1px 1px #000000; */
+}
+
+.peopleSelectionSelected {
+	color: #000000;
+	cursor: default;
+	
+	display: block;
+	padding: 6px 10px;
+}
+
+.peopleSelectionSelected:hover {
+	color: #000000;
+}
+
+.peopleSelectionUnselected {
+	color: #3C8DBC;
+	cursor: pointer;
+	border: 1px solid #adadad;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	display: block;
+	padding: 4px 10px;
+	
+	background-color: #e6e6e6;
+	
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125) inset;
+    outline: 0 none;
+}
+
+.peopleSelectionUnselected:hover {
+	color: #F56954;
+}
+
+#toggleMapButton{
+	color: #3C8DBC;
+	font-weight: bold;
+	cursor: pointer;
+	border: 1px solid #adadad;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	display: block;
+	padding: 4px 10px;
+	
+	background-color: #e6e6e6;
+	
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125) inset;
+    outline: 0 none;
+}
+
+#toggleMapButton:hover{
+	color: #F39C12;
+}
+
+
+/** @group clearfix **/
+.clearfix:after { 
+	content: "."; 
+	display: block; 
+	clear: both; 
+	visibility: hidden; 
+	line-height: 0; 
+	height: 0; 
+}
+.clearfix { 
+	display: inline-block; 
+}
+
+#blank{
+	padding-bottom: 5px;
+}
+
+#img{
+	margin-right: 5px;
+}
+
+#top-people-area{
+	position: absolute;
+	width: 380px;
+	height: 225px;
+	left: 22.5%;
+	top: 80px;
+	/*border: 1px solid black;*/
+}
+
+.inst-img{
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+.people-panel-body{
+	padding:0px 15px;
+}
+
+.panel-people{
+	width:450px;
+	border-color: #DDDDDD;
+	background-color: #DDDDDD;
+	height: 41px;
+}
+.top-panel{
+	width:450px;
+	border-color: #DDDDDD;
+	background-color: #DDDDDD;
+	height: 25px;
+}
+
+#top-people-1-area{
+	float:right;
+	width: 250px;
+}
+
+#top-people-2-area{
+	float:right;
+	width: 250px;
+}
+#top-people-3-area{
+	float:right;
+	width: 250px;
+}
+#top-people-4-area{
+	float:right;
+	width: 250px;
+}
+#top-people-5-area{
+	float:right;
+	width: 250px;
+}
+.people-name{
+	vertical-align: middle;
+	float: left;
+	padding-top: 7px;
+	margin-left: 10px;
+}
+.top-people{
+	vertical-align: middle;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	background-color: #123456;
+	color:#ffffff;
+	height: 25px;
+	width:100%;
+}
+
+#grid{
+	margin-top: 5px;
+	padding-right: 5px;
+}
+
+.logo1{
+	padding-top: 10px;
+	padding-left: 10px;
+}
+.logo2{
+	padding-top: 10px;
+	padding-right: 10px;
+}
+
+#people-draw-area{
+	width: 605px; 
+	height: 250px;
+	position: absolute;
+	margin-top: 335px;
+	margin-left: 22%;
+}
+
+#people-draw-area-donut{
+	position: absolute;
+	margin-top: 60px;
+	margin-left: 60%;
+}
+
+.navbtn{
+	font-family: 'Ubuntu',sans-serif;
+	width: 100%;
+	position: absolute;
+	margin-left: 10px;
+}
+.navbtn ul {
+	max-width: 1240px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 1.3em;
+	font-weight: 300;
+}
+
+/* Adding some background color to the different menu items */
+
+.navbtn li:nth-child(6n+2) {
+	background: rgb(208, 101, 3);
+}
+
+.navbtn li:nth-child(6n+3) {
+	background: rgb(233, 147, 26);
+}
+
+.navbtn li:nth-child(6n+4) {
+	background: rgb(22, 145, 190);
+}
+
+.navbtn li:nth-child(6n+5) {
+	background: rgb(22, 107, 162);
+}
+
+.navbtn li:nth-child(6n+6) {
+	background: rgb(27, 54, 71);
+}
+
+.navbtn li:nth-child(6n+1) {
+	background: rgb(21, 40, 54);
+}
+
+.navbtn li {
+		float: left;
+		width: auto;
+		text-align: center;
+		color: #ffffff;
+		padding:5px 5px 5px 5px;
+		-webkit-transition: border .5s;
+		-moz-transition: border .5s;
+		-o-transition: border .5s;
+		-ms-transition: border .5s;
+		transition: border .5s;
+		font-family: 'Bree Serif';
+		text-shadow: 1px 1px 1px rgb(51,51,51);
+	}
+
+#myTab .active{
+	/* box-shadow: 0px 4px 2px -1px #444; */
+	color: #333;
+	box-shadow: inset 0px 3px 2px rgba(255,255,255,.22), 
+    inset 0px -3px 2px rgba(0,0,0,.17), 
+    inset 0px 20px 10px rgba(255,255,255,.12), 
+    0px 0px 4px 1px rgba(0,0,0,.1), 
+    0px 3px 2px rgba(0,0,0,.2);
+	font-weight: bold;
+	text-shadow: 1px 1px 1px #eee;
+}
+
+#myTab .active a{
+	color: #333;
+}
+
+
+
+
+.navbtn a {
+	display: block;
+	width: auto;
+	color: #ffffff;
+}
+
+
+.glyphicon {
+margin-right: 4px !important; /*override*/
+}
+.pagination .glyphicon {
+margin-right: 0px !important; /*override*/
+}
+.pagination a {
+color: #555;
+}
+.panel ul {
+padding: 0px;
+margin: 0px;
+list-style: none outside none;
+}
+.news-item {
+padding: 4px 4px;
+margin: 0px;
+border-bottom: 1px dotted #555;
+}
+

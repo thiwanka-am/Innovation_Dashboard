@@ -1,0 +1,1 @@
+<%var db = new Database("jdbc:mysql://localhost:3307/innovation_db", "root", "123");%>

@@ -1,0 +1,462 @@
+<!DOCTYPE html><%include("securitymanager.jag");%><%if(!isuserlog()){response.sendRedirect("index.jag");}else{%><%include('db.jag');%><%var year=new Date().getFullYear();%>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Innovation | Dashboard</title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/panel.css" rel="stylesheet" type="text/css" />
+        <link type="text/css" rel="stylesheet" href="css/forms/organizationdetails.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="js/plugins/jqgrid/css/themes/ui-lightness/jquery-ui-1.10.4.min.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="js/plugins/jqgrid/css/ui.jqgrid.css" />
+        <link href="css/jquerymessagebox/msgBoxLight.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="css/select2/css/select2.css"/>
+        <link rel="stylesheet" type="text/css" href="css/select2/select2-bootstrap.css"/>
+        <style type="text/css">
+            #jQGrid{margin-right: auto;margin-left: auto;width: 640px;}
+        </style>
+    </head>
+    <body class="skin-blue" onload="fillGrid()">
+        <header class="header">
+            <span class="navbar" style="float:left;margin-left: 10px;border-radius: 0px;">
+                <a href="index.jag"><img src="images/costi_logo.png" height="52px" style="margin-left: -10px; width: 140px;margin-top: -2px;"></a>
+            </span>
+            <span class="navbar" style="float:left;margin-left: 0px;border-radius: 0px;padding-left: 10px;padding-right: 10px;">
+                <img src="images/gov_logo.png" height="42" width="38" style="margin-top: 4px;">
+            </span>
+            <span class="navbar navbar-text" style="z-index: 10000;float:left;margin-left: 0px;margin-top: 0px;border-radius: 0px;width: 500px;padding-left: 10px;padding-top: 8px;font-size: 28px;font-weight: bold;color: #FFFFFF;font-family: FontAwesome;">
+                Sri Lanka Innovation Dashboard
+            </span>
+            <nav class="navbar navbar-static-top" role="navigation">
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="glyphicon glyphicon-user"></i>
+                                <span>Profile<i class="caret"></i></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="user-header bg-light-blue">
+                                    <img src="images/avatar5.png" class="img-circle" alt="User Image" />
+                                    <p>
+                                        User-Researcher
+                                        <small>Member since June 2014</small>
+                                    </p>
+                                </li>
+                                <li class="user-body">
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Patent</a>
+                                    </div>
+                                    <div class="col-xs-3 text-center">
+                                        <a href="#"></a>
+                                    </div>
+                                    <div class="col-xs-5 text-center">
+                                        <a href="#">Publications</a>
+                                    </div>
+                                </li>
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="mainProfile.jag" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="signout.jag" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+            <aside class="left-side sidebar-offcanvas">
+                <section class="sidebar">
+                    <div class="user-panel" style="height: 51px;">
+                        <div class="pull-left image">
+                            <img src="images/avatar5.png" class="img-circle" style="margin-top: -5px;" alt="User Image" />
+                        </div>
+                        <div class="pull-left info">
+                            <p><%="pplfulnm15"%></p>
+                        </div>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li class="active">
+                            <a href="mainprofile.jag">
+                                <i class="fa fa-group"></i><span>Profile</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="mainprofilebasicdetails.jag">
+                                <i class="fa fa-user"></i><span>Basic Details</span>
+                            </a>
+                        </li>
+                        <li  class="active">
+                            <a href="mainprofilepasswordreset.jag">
+                                <i class="fa fa-lock"></i><span>Password Reset</span>
+                            </a>
+                        </li>
+                        <li  class="active">
+                            <a href="mainprofilecontactdetails.jag">
+                                <i class="fa fa-phone"></i><span>Contact Details</span>
+                            </a>
+                        </li>
+                        <li  class="active">
+                            <a href="mainprofileorganizationdetails.jag">
+                                <i class="fa fa-home"></i><span>Organization details</span>
+                            </a>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-laptop"></i>
+                                <span>Publications</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="mainprofilepublications.jag?formtype=jour" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i>Journal</a></li>
+                                <li><a href="mainprofilepublications.jag?formtype=book" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i>Research Book</a></li>
+                                <li><a href="mainprofilepublications.jag?formtype=tech" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i>Technical Report</a></li>
+                                <li><a href="mainprofilepublications.jag?formtype=conf" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i>Conference</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+            </aside>
+            <aside class="right-side">
+                <section class="content-header">
+                    <h1>
+                        Organization Details
+                        <small>Control panel</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="index.jag"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="active">Organization Details</li>
+                    </ol>                    
+                </section>
+                <section class="content">
+                    <div id="content">
+                        <div id="jQGrid"></div> 
+                    </div>
+                    <div id="formWrapper" class="container roundCorner textColor">
+                        <form class="form-horizontal" method="post" action="organizationdetails.jag" id="orgdetailsform">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-2" for="organizationform">Organization(*)</label>
+                                    <div class="col-xs-9">
+                                        <select id="organizationform" name="organizationform" class="select2 input-default" style="width:460px;">
+                                            <%var organizations=db.query("SELECT * FROM organization");%>
+                                            <%for(var i=0;i<organizations.length;i++){%>
+                                            <option value="<%=organizations[i].organization_id%>"><%=organizations[i].name%></option>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-2" for="startyearform">Start Year(*)</label>
+                                    <div class="col-xs-3">
+                                        <select id="startyearform" name="startyearform" class="select2 input-default" style="width:170px;">
+                                            <%                                            
+                                            for (var i=year; i>=1950; i--) {
+                                            %>
+                                                <option value="<%=(i)+""%>"><%=i+""%></option>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-xs-3" for="startmonthform">Start Month(*)</label>
+                                    <div class="col-xs-3">
+                                        <select id="startmonthform" name="startmonthform" class="select2 input-default" style="width:170px;">
+                                            <option value="1">January</option>
+                                            <option value="2">February</option>
+                                            <option value="3">March</option>
+                                            <option value="4">April</option>
+                                            <option value="5">May</option>
+                                            <option value="6">June</option>
+                                            <option value="7">July</option>
+                                            <option value="8">August</option>
+                                            <option value="9">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr style="display: block;height: 1px;border: 0;border-top: 1px solid #ccc;margin: 1em 0;padding: 0;">
+                                <div class="form-group">
+                                    <label class="control-label col-xs-2" for="endyearform">End Year</label>
+                                    <div class="col-xs-3">
+                                        <select id="endyearform" name="endyearform" class="select2 input-default" style="width:170px;">
+                                            <option value="0">Select</option>
+                                            <%
+                                            for (var i=year; i>=1950; i--) {
+                                            %>
+                                                <option value="<%=(i)+""%>"><%=i+""%></option>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-xs-3" for="endmonthform">End Month</label>
+                                    <div class="col-xs-3">
+                                        <select id="endmonthform" name="endmonthform" class="select2 input-default" style="width:170px;">
+                                            <option value="1">January</option>
+                                            <option value="2">February</option>
+                                            <option value="3">March</option>
+                                            <option value="4">April</option>
+                                            <option value="5">May</option>
+                                            <option value="6">June</option>
+                                            <option value="7">July</option>
+                                            <option value="8">August</option>
+                                            <option value="9">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                </div>                                
+                                <div class="form-group">
+                                    <label class="control-label col-xs-10" for="register"></label>
+                                    <div class="col-xs-2">
+                                        <button id="register" name="register" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <input type="hidden" name="oper" value="addform">
+                        </form>
+                    </div>
+                </section>
+            </aside>
+        </div>
+        <script src="js/jquery/jquery-1.9.1.js"></script>
+        <script src="js/jquerymessagebox/jquery.msgBox.js" type="text/javascript"></script>
+        <script src="js/bootstrap/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/home/forms.js" type="text/javascript"></script>
+        <script src="js/plugins/jqgrid/js/i18n/grid.locale-en.js" type="text/javascript"></script>
+        <script src="js/plugins/jqgrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+        <script src="js/select2/select2.js"></script>
+        <script type="text/javascript">
+        function fillGrid() {
+            $("#jQGrid").html("<table id=\"table1\" style=\"font-size:14px\"><div id=\"footer1\">");
+            jQuery("#table1").jqGrid(
+                    {
+                        url: 'organizationdetails.jag?oper=get',
+                        datatype: "JSON",
+                        mtype: 'POST',
+                        width: 640,
+                        height: 222,
+                        colNames: ['ID', 'Start Year(*)','Start Month(*)', 'End Year','End Month','Organization(*)'],
+                        colModel: [
+                            {name: 'person_organization_id', index: 'person_organization_id', width: 0, sortable: false, editable: false, hidden: true,key:true},
+                            {name: 'startyear', index: 'startyear', width: 100, sortable: false, editable: true, sortable:false, editrules: {required: true}, edittype: "select",
+                                editoptions: {value: {
+                                        <%
+                                            for (var i=year; i>=1950; i--) {
+                                        %>
+                                            <%=(i)+""+": '"+(i)+""+"',"%>
+                                        <%}%>
+                                    }}
+                            },
+                            {name: 'startmonth', index: 'startmonth', width: 100, sortable: false, editable: true, sortable:false, editrules: {required: true}, edittype: "select",
+                                editoptions: {value: {
+                                    1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'
+                                }}
+                            },
+                            {name: 'endyear', index: 'endyear', width: 100, sortable: false, editable: true, sortable:false, editrules: {required: true}, edittype: "select",
+                                editoptions: {value: {
+                                        0:'Select',
+                                        <%
+                                            for (var i=year; i>=1950; i--) {
+                                        %>
+                                            <%=(i)+""+": '"+(i)+""+"',"%>
+                                        <%}%>
+                                    }}
+                            },
+                            {name: 'endmonth', index: 'endmonth', width: 100, sortable: false, editable: true, sortable:false, editrules: {required: true}, edittype: "select",
+                                editoptions: {value: {
+                                    1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'
+                                }}
+                            },
+                            {name: 'name', index: 'name', width: 240, sortable: false, editable: true, sortable:false, editrules: {required: true}, edittype: "select",
+                                editoptions: {value: {
+                                        <%for(var i=0;i<organizations.length;i++){%>
+                                        <%=organizations[i].organization_id+":"+"'"+organizations[i].name+"'"+","%>
+                                        <%}%>
+                                    }}
+                            }
+                        ],
+                        multiselect: false,
+                        paging: true,
+                        rowNum: 10,
+                        pager: $("#footer1"),
+                        loadonce: true,
+                        viewrecords: true,
+                        caption: "Organization Details"
+                    }
+            );
+
+            jQuery("#table1").jqGrid('navGrid', '#footer1',
+                {
+                    cloneToTop: true,
+                    view: true,
+                    edittext: "Edit",
+                    addtext: "Add",
+                    deltext: "Delete",
+                    searchtext: "Search",
+                    viewtext: "View",
+                    edittitle: "Edit selected row",
+                    addtitle: "Add new row",
+                    deltitle: "Delete selected row",
+                    searchtitle: "Find records",
+                    refreshtitle: "Reload Grid",
+                    viewtitle: "View selected row",
+                    alertcap: "Warning",
+                    alerttext: "Please, select a row",
+                }, // **********options
+                {
+                    closeOnEscape: true,
+                    width: 650,
+                    url: 'organizationdetails.jag',
+                    closeAfterEdit: false,
+                    afterComplete: function(response, postdata) {
+                        var res = response.responseText;
+                        if ($.trim(res) == 'true') {
+                            successMessage("Done", "Edit Successfully");
+                            fillGrid();
+                        } else {
+                            errorMessage("Error", res);
+                            fillGrid();
+                        }
+                    }
+                }, //edit
+                {
+                    url: 'organizationdetails.jag',
+                    closeAfterAdd: false,
+                    width:600,
+                    afterComplete: function(response, postdata) {
+                        var res = response.responseText;
+                        if ($.trim(res) == 'true') {
+                            successMessage("Done", "Save Successfully");
+                            fillGrid();
+                        } else {
+                            errorMessage("Error", res);
+                            fillGrid();
+                        }
+                    },
+                    jqModal: true,
+                    checkOnUpdate: true,
+                    savekey: [true, 13],
+                    navkeys: [true, 38, 40],
+                    checkOnSubmit: true,
+                    reloadAfterSubmit: false,
+                    closeOnEscape: true,
+                    bottominfo: "Fields marked with (*) are required"
+                }, //add
+                {
+                    closeOnEscape: true,
+                    url: 'organizationdetails.jag',
+                    closeAfterEdit: true,
+                    afterComplete: function(response, postdata) {
+                        var res = response.responseText;
+                        if ($.trim(res) == 'true') {
+                            successMessage("Done", "Delete Successfully");
+                        } else {
+                            errorMessage("Error", res);
+                        }
+                    }
+                }, //del
+                {
+                    multipleSearch: true, 
+                    closeOnEscape: true
+                }, //search
+                {
+                    closeOnEscape: true,
+                    width: 500
+                } //view
+                );
+                var topPagerDiv = $("#list_toppager")[0];
+                $("#refresh_table1_top", topPagerDiv).remove();
+                $("#table1_toppager_center", topPagerDiv).remove();
+                $("#table1_toppager_right", topPagerDiv).remove();
+                var bottomPagerDiv = $("div#pager")[0];
+                $("#refresh_table1", bottomPagerDiv).remove();
+                jQuery("#table1").jqGrid({}).navButtonAdd("#footer1_left",
+                        {
+                            caption: "Refresh",
+                            buttonicon: "ui-icon-refresh",
+                            onClickButton: function() {
+                                fillGrid();
+                            },
+                            position: "last",
+                            title: "Refresh Data"
+                        }
+                );
+                jQuery("#table1").jqGrid({}).navButtonAdd("#table1_toppager_left",
+                        {
+                            caption: "Refresh",
+                            buttonicon: "ui-icon-refresh",
+                            onClickButton: function() {
+                                fillGrid();
+                            },
+                            position: "last",
+                            title: "Refresh This Page"
+                        }
+                );
+                $("#table1").jqGrid('navGrid', '#TblGrid_table1', {}, {width: 500});
+
+            }
+            function errorMessage(title, error) {
+                    $.msgBox({
+                        title: title,
+                        content: error
+                    });
+            }
+            function successMessage(title, content) {
+                $.msgBox({
+                    title: title,
+                    content: content,
+                    type: "info"
+                });
+            }
+            $("#orgdetailsform").submit(function(){
+                if(validateForm()){
+                    var url = "organizationdetails.jag";
+                    $.ajax({
+                       type: "POST",
+                       url: url,
+                       data: $("#orgdetailsform").serialize(),
+                       success: function(data)
+                       {
+                           if ($.trim(data) == 'true') {
+                                successMessage("Done", "Save Successfully");
+                                fillGrid();
+                            } else {
+                                errorMessage("Error", res);
+                                fillGrid();
+                            }
+                       }
+                     });
+                    fillGrid();
+                }                
+                return false;
+            });
+            function validateForm(){
+                var startyearformVal=$('#startyearform').val();
+                var startmonthformVal=$('#startmonthform').val();
+                var endyearformVal=$('#endyearform').val();
+                var endmonthformVal=$('#endmonthform').val();
+                if(endyearformVal!=0){
+                    if(startyearformVal==endyearformVal&&startmonthformVal>endmonthformVal){
+                        errorMessage('Error','Start year month cannot greater than end year month.');
+                        return false;
+                    }else if(startyearformVal>endyearformVal){
+                        errorMessage('Error','Start year cannot greater than end year.');
+                        return false;
+                    }
+                }
+                return true;
+            }
+            $('.select2').select2({ placeholder : '' });
+            $('.select2-remote').select2({ data: [{id:'A', text:'A'}]});
+            $('button[data-select2-open]').click(function(){
+            $('#' + $(this).data('select2-open')).select2('open');
+            });
+        </script>
+    </body>
+</html><%}%>

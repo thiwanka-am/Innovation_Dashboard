@@ -1,0 +1,805 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%if(session.get('attempt')!=null&session.get('attempt')==3){response.sendRedirect("captchaValidation.jag");}%>
+<%include("researchareas.jag");%>
+<%include("title.jag");%>
+<%include("securitymanager.jag");%>
+<%include("db.jag");%>
+<html>
+    <head>
+        <title>Innovation Dashbaord</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/home.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="js/common.js"></script>
+        <link href="css/styles.css" rel="stylesheet" type="text/css" />
+        <link type="text/css" rel="stylesheet" href="css/forms/registerform.css" />
+        <link href="css/jquerymessagebox/msgBoxLight.css" rel="stylesheet" type="text/css">
+        <script src="js/jquery/jquery-1.9.1.js"></script>
+        <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/home/app.js" type="text/javascript"></script>
+        <script src="js/jquery.bootstrap.newsbox.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="js/bootstrapvalidator/bootstrapValidator.min.js"></script>
+        <script src="js/jquerymessagebox/jquery.msgBox.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(function() {
+                $(".demo1").bootstrapNews({
+                    newsPerPage: 2,
+                    navigation: true,
+                    autoplay: true,
+                    direction: 'up', // up or down
+                    animationSpeed: 'normal',
+                    newsTickerInterval: 4000, //4 secs
+                    pauseOnHover: true,
+                    onStop: null,
+                    onPause: null,
+                    onReset: null,
+                    onPrev: null,
+                    onNext: null,
+                    onToDo: null
+                });
+            });
+        </script>
+    <body  class="skin-blue">
+    <header class="mainheader">
+        <div class="logo">
+            <a href="index.jag"><img src="images/logo.png" height="40"
+                                     style="margin-left: -10px; width: 50px;"></a>
+        </div>
+        <nav class="navbar navbar-static-top" role="navigation"> <span>
+                <img src="images/gov_logo.png" height="34" width="28" style="margin-top: 2px;">
+            </span> <span class="fa"
+                          style="color: #F9F9F9; font-size: 24px; vertical-align: middle; margin-left: 10px; text-shadow: 1px 1px 1px #333333; font-family: Bree Serif;">
+                Sri Lanka Innovation Dashboard </span>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <%if(isuserlog()){%>
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-user"></i>
+                            <span>Profile
+                                <i class="caret"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header bg-light-blue">
+                                <img src="images/avatar5.png" class="img-circle" alt="User Image" />
+                                <p>Hello <%=db.query("SELECT first_name FROM person WHERE person_id='"+session.get('person_id')+"'")[0].first_name%></p>
+                            </li>
+                            <li class="user-body">
+                                <div class="col-xs-4 text-center">
+                                    <a href="#">Patent</a>
+                                </div>
+                                <div class="col-xs-3 text-center">
+                                    <a href="#"></a>
+                                </div>
+                                <div class="col-xs-5 text-center">
+                                    <a href="#">Publications</a>
+                                </div>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="mainprofile.jag" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="signout.jag" class="btn btn-default btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <%}else{%>
+                    <li class="dropdown user user-menu">
+                        <a href="#" data-toggle="modal" data-target="#login"> 
+                            <i class="glyphicon glyphicon-user"></i><span>Login</span>
+                        </a>
+                    </li>
+                    <%}%>
+                </ul>
+                <!--
+                    <li class="dropdown user user-menu"><a href="#"
+                                                           class="dropdown-toggle" data-toggle="dropdown"> <i
+                                class="glyphicon glyphicon-user"></i> <span>Profile <i
+                                    class="caret"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header bg-light-blue"><img
+                                    src="images/avatar5.png" class="img-circle" alt="User Image" />
+                                <p>
+
+                                </p></li>
+                            <li class="user-body">
+                                <div class="col-xs-4 text-center">
+                                    <a href="#">Patent</a>
+                                </div>
+                                <div class="col-xs-3 text-center">
+                                    <a href="#"></a>
+                                </div>
+                                <div class="col-xs-5 text-center">
+                                    <a href="#">Publications</a>
+                                </div>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="mainProfile.jsp" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="UserSignOut" class="btn btn-default btn-flat">Sign
+                                        out</a>
+                                </div>
+                            </li>
+                        </ul></li>-->
+            </div>
+        </nav> </header>
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <aside class="right-side"> <section>
+                <div class="box-body">
+                    <div data-ride="carousel" class="carousel slide"
+                         id="carousel-example-generic">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img alt="First slide" src="images/innovation1.jpg">
+
+                            </div>
+                        </div>
+                        <a data-slide="prev" href="#carousel-example-generic"
+                           class="left carousel-control"> <span
+                                class="glyphicon glyphicon-chevron-left"></span>
+                        </a> <a data-slide="next" href="#carousel-example-generic"
+                                class="right carousel-control"> <span
+                                class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
+                </div>
+            </section> <section class="content">
+                <div class="row">
+                    <div class="col-lg-4 col-xs-4">
+                        <div class="small-box bg-red">
+                            <div class="inner">
+                                <h3 class="fa"
+                                    style="text-shadow: 1px 1px 1px #333333; font-family: Bree Serif;">People</h3>
+                                <p>Researchers, Scientists, Inventors, Innovators...</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="dashboard.jag?option=people" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span class="glyphicon glyphicon-list-alt"></span> <b>News</b>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <ul class="demo1">
+
+                                            <li class="news-item">
+                                                <table cellpadding="4">
+                                                    <tr>
+                                                        <td><img src="images/news/news2.jpg" width="60"
+                                                                 height="60" /></td>
+                                                        <td>Thambuththegama student wins 3 awards at Intel
+                                                            International Science and Engineering Fair 2014<a
+                                                                href="http://costisl.wordpress.com/2014/07/07/thambuththegama-student-wins-3-awards-at-intel-international-science-and-engineering-fair-2014/"
+                                                                target="blank"> Read more...</a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </li>
+
+
+                                            <li class="news-item">
+                                                <table cellpadding="4">
+                                                    <tr>
+                                                        <td><img src="images/news/news5.jpg" width="60"
+                                                                 height="60" /></td>
+                                                        <td>COSTI event: Mainstreaming science technology and
+                                                            innovation for public communication<a
+                                                                href="http://costisl.wordpress.com/2014/06/02/new-costi-event/"
+                                                                target="blank"> Read more...</a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </li>
+                                            <li class="news-item">
+                                                <table cellpadding="4">
+                                                    <tr>
+                                                        <td><img src="images/news/news6.jpg" width="60"
+                                                                 height="60" /></td>
+                                                        <td>Science Journalism for better Governance<a
+                                                                href="http://costisl.wordpress.com/2014/07/22/science-journalism-for-better-governance/"
+                                                                target="blank"> Read more...</a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </li>
+
+                                            <li class="news-item">
+                                                <table cellpadding="4">
+                                                    <tr>
+                                                        <td><img src="images/profile.jpg" width="60" height="60" /></td>
+                                                        <td>For the first time, Sri Lanka’s apex exports body
+                                                            EDB has entered WTO/UNCTAD/ITCs benchmark of global export
+                                                            agencies<a
+                                                                href="http://costisl.wordpress.com/2014/07/17/for-the-first-time-sri-lankas-apex-exports-body-edb-has-entered-wtounctaditcs-benchmark-of-global-export-agencies/"
+                                                                target="blank"> Read more...</a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xs-4">
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h3 class="fa"
+                                    style="text-shadow: 1px 1px 1px #333333; font-family: Bree Serif;">Places</h3>
+                                <p>Institutes and Organizatons afiliated with innovation...</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-earth"></i>
+                            </div>
+                            <a href="dashboard.jag?option=places" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+
+                        <div class="box box-solid bg-light-blue">
+                            <div class="box-body">
+                                <div align="center">
+                                    <a href="http://www.costi.gov.lk/index.php/en/" target="blank"><img
+                                            height="60" src="images/costi_logo.png"
+                                            style="border-radius: 3px;"></a>
+                                </div>
+
+                                <br /> One of the major output of COSTI is the Sri Lanka
+                                Innovation Dashboard. A system that can be provided information
+                                about current status of the country, with regard to Science,
+                                Technology and Innovation. System will be also facilitates with
+                                status of a particular research in a given time and a one click
+                                view of Research and Development indicators of the entire country
+                                in a given time. <br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xs-4">
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3 class="fa"
+                                    style="text-shadow: 1px 1px 1px #333333; font-family: Bree Serif;">Position</h3>
+                                <p>Global Innovation Index and other innovation indices...</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="dashboard.jag?option=position" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+
+                        <div class="box box-info">
+                            <div class="box-body">
+                                <ul class="timeline">
+
+                                    <li>
+                                        <i class="fa fa-user bg-blue"></i>
+                                        <div class="timeline-item">
+                                            <h3 class="timeline-header no-border"
+                                                style="font-family: 'Bree Serif';">
+                                                <table
+                                                    style="width: 300px; font-size: 18px; text-align: left;">
+                                                    <tr>
+                                                        <td style="font-size: 24px;">4300</td>
+                                                        <td><b>People</b></td>
+                                                    </tr>
+                                                </table>
+                                            </h3>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-book bg-red"></i>
+                                        <div class="timeline-item">
+                                            <h3 class="timeline-header no-border"
+                                                style="font-family: 'Bree Serif';">
+                                                <table
+                                                    style="width: 300px; font-size: 18px; text-align: left;">
+                                                    <tr>
+                                                        <td style="font-size: 24px;">32453</td>
+                                                        <td><b>Publications</b></td>
+                                                    </tr>
+                                                </table>
+                                            </h3>
+
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-globe bg-green"></i>
+                                        <div class="timeline-item">
+                                            <h3 class="timeline-header no-border"
+                                                style="font-family: 'Bree Serif';">
+                                                <table
+                                                    style="width: 300px; font-size: 18px; text-align: center;">
+                                                    <tr>
+                                                        <td style="font-size: 24px;">52</td>
+                                                        <td><b>Organizations</b></td>
+                                                    </tr>
+                                                </table>
+                                            </h3>
+
+
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 connectedSortable"></div>
+                </div>
+            </section>
+        </aside>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="signInButton"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Login</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="display:none" id="login-alert" class="alert alert-danger"></div>
+                    <form id="loginform" class="form-horizontal">
+                        <div style="margin-bottom: 25px" class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input id="email1" type="text" class="form-control" name="email1" value="" placeholder="email">
+                        </div>
+                        <div style="margin-bottom: 25px" class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="password1" type="password" class="form-control" name="password1" placeholder="password">
+                        </div>
+                        <div class="panel-heading">
+                            <div class="panel-title" style="margin-top: -15px;font-size:85%;"><input id="remember" type="checkbox" name="remember" checked><p style="margin-top: -15px;margin-left: 20px;">Remember me</p></div>
+                            <div style="float:right; font-size: 80%;margin-top: -25px;"><button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 10px;">Close</button><input type="submit" class="btn btn-primary" value="Login"/></div>
+                        </div>
+                        <div class="form-group" style="margin-top: 20px;">
+                            <div class="col-md-12 control">
+                                <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%"> Don't have an account! <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#signup">Sign Up Here</a> </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fad bs-example-modal-lge" id="signup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="signUpButton"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Signup</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" action="register.jag" method="post" id="defaultForm">
+                        <fieldset>
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <label class="control-label col-xs-3 textColor" for="title">Title</label>
+                                <div class="col-xs-3">
+                                    <select id="title" name="title" class="form-control1"></select>
+                                </div>
+                                <label class="control-label col-xs-3 textColor" for="gender">Gender</label>
+                                <div class="col-xs-3">
+                                    <select id="gender" name="gender" class="form-control1">
+                                        <option value="1">Male</option>
+                                        <option value="0">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-3 textColor" for="firstname">First Name/s</label>
+                                <div class="col-xs-9">
+                                    <input id="firstname" name="firstname" type="text" placeholder="First Name" class="form-control1 input-md" required="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-3 textColor" for="lastname">Last Name</label>
+                                <div class="col-xs-9">
+                                    <input id="lastname" name="lastname" type="text" placeholder="Last Name" class="form-control1 input-md" required="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-3 textColor" for="initials">Initials</label>
+                                <div class="col-xs-9">
+                                    <input id="initials" name="initials" type="text" placeholder="Initials" class="form-control1 input-md" required="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-3 textColor">Research Place</label>
+                                <div class="col-xs-9">
+                                    <select id="researchertype" name="researchertype" multiple class="form-control1" onchange="changeResearcherType()">
+                                        <option value="1" selected="">I have an University</option>
+                                        <option value="2">I have an Institute</option>
+                                        <option value="3">I'm Independent Researcher</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="orgwrapper">
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3 textColor" for="organization" id="organizationlabel">University</label>
+                                    <div class="col-xs-9">
+                                        <select id="organization" name="organization" class="form-control1" onchange="selectInstitte()">
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group" id="organizationText"
+                                     style="display: none;">
+                                    <label class="control-label col-xs-3 textColor" for="initials" id="organizationotherlabel">New University</label>
+                                    <div class="col-xs-9">
+                                        <input id="organizationName" name="organizationName" type="text" placeholder="Please enter this value" class="form-control1 input-md" required="">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <label class="control-label col-xs-3 textColor"
+                                       for="mainresarea">Main Res. Area</label>
+                                <div class="col-xs-9">
+                                    <select id="mainresarea" name="mainresarea" class="form-control1" onchange="getSubResearchAreas()"></select>
+                                </div>
+                            </div>
+
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <label class="control-label col-xs-3 textColor" for="subresarea">Sub
+                                    Res. Area</label>
+                                <div class="col-xs-9">
+                                    <select id="subresarea" name="subresarea" class="form-control1" onchange="getSubSubResearchAreas()"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-3 textColor"
+                                       for="subsubresarea">Field of Interest</label>
+                                <div class="col-xs-9">
+                                    <select id="subsubresarea" name="subsubresarea" class="form-control1"></select>
+                                </div>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="control-label col-xs-3 textColor" for="email">E-Mail</label>
+                                <div class="col-xs-9">
+                                    <input id="email" name="email" type="text" placeholder="E-Mail"
+                                           class="form-control1 input-md" required="">
+                                </div>
+                            </div>
+                            <!-- Password input-->
+                            <div class="form-group">
+                                <label class="control-label col-xs-3 textColor" for="password">Password</label>
+                                <div class="col-xs-9">
+                                    <input id="password" name="password" type="password"
+                                           placeholder="Password" class="form-control1 input-md"
+                                           required="">
+                                </div>
+                            </div>
+                            <!-- Password input-->
+                            <div class="form-group">
+                                <label class="control-label col-xs-3 textColor"
+                                       for="confirmPassword">Confirm Password</label>
+                                <div class="col-xs-9">
+                                    <input id="confirmPassword" name="confirmPassword"
+                                           type="password" placeholder="Password"
+                                           class="form-control1 input-md" required="">
+                                </div>
+                            </div>
+                            <!-- Button -->
+                            <div class="form-group">
+                                <label class="control-label col-xs-3" for="register"></label>
+                                <div class="col-xs-9">
+                                    <input type="submit" class="btn btn-primary" value="Done" id="submitbutton">
+                                    <input type="button" class="btn btn-primary" value="Reset" id="resetbutton" onclick="document.getElementById('defaultForm').reset();">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Back
+                                    To <a href="#" data-dismiss="modal" data-toggle="modal"
+                                          data-target="#login">Sign In</a>
+                                </div>
+                            </div>
+                        </fieldset><input type="hidden" name="type" value="add">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="captcha" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="captchaModelContent"  style="margin-left: auto;margin-right: auto;"></div>
+        </div>
+    </div>
+    <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#captcha" id="captchaButton" onclick="$('#signInButton').click(); captcha();"></a>
+    <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#login" id="loginButton"></a>
+    <script type="text/javascript">
+        $(function() {
+            $("#inlineRadio1").css({opacity: 1});
+            $("#inlineRadio2").css({opacity: 1});
+            $("#inlineRadio3").css({opacity: 1});
+        }); 
+        $("#loginform").submit(function(){
+            var url = "login.jag";
+            $.ajax({
+               type: "POST",
+               url: url,
+               data: $("#loginform").serialize(),
+               success: function(data)
+               {
+                   if ($.trim(data) == 'true') {
+                        successMessage("Done", "Login Successfully");
+                        window.setTimeout(function() {
+                            document.location.href="index.jag";
+                        }, 1000);
+                    } else if (data.trim() == "false") {
+                       errorMessage("Invalid username or Password", data);
+                    } else if (data.trim() == "captcha") {
+                        $('#captchaButton').click();
+                    }else{
+                        errorMessage("Error", data);
+                    }
+               }
+             });
+            return false;
+        });
+        function submit(validator, form, submitButton) {
+            $("#submitbutton").attr("disabled", true);
+            $.post(form.attr('action'), form.serialize(), function(result) {
+                if (result.trim() == true || result.trim() == 'true') {
+                    $("#submitbutton").attr("disabled", false);
+                    successMessage("Done", "SignUp Successfully.Please verify your e-mail address and try login.");
+                    document.getElementById('defaultForm').reset();
+                    window.setTimeout(function() {
+                        $('#signUpButton').click();
+                        $('#loginButton').click();
+                    }, 2000);
+                } else {
+                    $("#submitbutton").attr("disabled", false);
+                    errorMessage("Error",result);
+                }
+            });
+        }
+        function captcha() {
+                $('#captchaModelContent').load("captchaValidation.jag");
+        }
+        function errorMessage(title, error) {
+            $.msgBox({
+                title: title,
+                content: error
+            });
+        }
+        function successMessage(title, content) {
+            $.msgBox({
+                title: title,
+                content: content,
+                type: "info"
+            });
+        }
+        var titles=<%=getTitles()%>;
+        $.each(titles,function(index, object){
+            $('#title').append($("<option></option>").attr("value",object.title_id).text(object.title));
+        });
+        var organizations=<%=getOrganizations()%>;
+        $.each(organizations,function(index, object){
+            $('#organization').append($("<option></option>").attr("value",object.organization_id).text(object.name));
+        });
+        $('#organization').append($("<option></option>").attr("value","0").text("Other"));
+        var researchareas=<%=getMainResearchArea()%>;
+        $.each(researchareas,function(index, object){
+            $('#mainresarea').append($("<option></option>").attr("value",object.area_of_interest_id).text(object.name));
+        });
+        getSubResearchAreas();
+        function getSubResearchAreas(){
+            $.ajax({
+              type: "POST",
+              url: "researchareas.jag",
+              data: { type: "sub",val:$('#mainresarea').val()}
+            }).done(function(data) {
+                setSubResArea(eval(data));
+            });
+        }
+        function getSubSubResearchAreas(){
+            $('#subsubresarea').empty();
+            $.ajax({
+              type: "POST",
+              url: "researchareas.jag",
+              data: {type: "subsub",val:$('#subresarea').val()}
+            }).done(function(data) {
+                setSubSubResArea(eval(data));
+            });
+        }
+        function setSubResArea(data){
+            $('#subresarea').empty();
+            $.each(data,function(index,object){
+                $('#subresarea').append($("<option></option>").attr("value",object.sub_area_of_interest_id).text(object.name));
+            });     
+            getSubSubResearchAreas();       
+        }
+        function setSubSubResArea(data){
+            $('#subsubresarea').empty();
+            $.each(data,function(index,object){
+                $('#subsubresarea').append($("<option></option>").attr("value",object.sub_sub_area_of_interest_id).text(object.name));
+            });
+        }
+        function selectInstitte() {
+            var e = document.getElementById("organization");
+            var value = e.options[e.selectedIndex].value;
+            var text = e.options[e.selectedIndex].text;
+            if (text == 'Other') {
+                show();
+            } else {
+                hide();
+            }
+        }
+        function changeResearcherType(){
+            var researchertype=$("#researchertype").val();
+            if(researchertype=="1"){
+                showResearcherType();
+                $("#organizationlabel").text("University");
+                $("#organizationotherlabel").text("New University");
+            }else if(researchertype=="2"){
+                showResearcherType();
+                $("#organizationlabel").text("Institute");
+                $("#organizationotherlabel").text("New Institute");
+            }else if(researchertype=="3"){
+                hideResearcherType();
+            }
+        }
+        function hide() {
+            document.getElementById('organizationText').style.display = "none";
+        }
+        function show() {
+            document.getElementById('organizationText').style.display = "block";
+        }
+        function showResearcherType(){
+            document.getElementById('orgwrapper').style.display = "block";
+        }
+        function hideResearcherType(){
+            document.getElementById('orgwrapper').style.display = "none";
+        }
+        $(document).ready(function() {
+            $('#defaultForm').bootstrapValidator({
+                live: 'disabled',
+                //feedbackIcons: {
+                //valid: 'glyphicon glyphicon-ok',
+                //invalid: 'glyphicon glyphicon-remove',
+                //validating: 'glyphicon glyphicon-refresh'
+                //},
+                submitHandler: function(validator, form, submitButton) {
+                    submit(validator, form, submitButton);
+                },
+                fields: {
+                    firstname: {
+                        message: 'The firstname is not valid',
+                        validators: {
+                            notEmpty: {
+                                message: 'The firstname is required and cannot be empty'
+                            },
+                            stringLength: {
+                                min: 3,
+                                max: 45,
+                                message: 'The firstname must be more than 3 and less than 45 characters long'
+                            },
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9_ \.]+$/,
+                                message: 'The firstname can only consist of alphabetical, number, dot and underscore'
+                            }
+                        }
+                    },
+                    lastname: {
+                        message: 'The lastname is not valid',
+                        validators: {
+                            notEmpty: {
+                                message: 'The lastname is required and cannot be empty'
+                            },
+                            stringLength: {
+                                min: 3,
+                                max: 100,
+                                message: 'The lastname must be more than 3 and less than 100 characters long'
+                            },
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9_ \.]+$/,
+                                message: 'The lastname can only consist of alphabetical, number, dot and underscore'
+                            }
+                        }
+                    },
+                    initials: {
+                        message: 'The initials is not valid',
+                        validators: {
+                            notEmpty: {
+                                message: 'The initials is required and cannot be empty'
+                            },
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9_ \.]+$/,
+                                message: 'The initials can only consist of alphabetical, number, dot and underscore'
+                            }
+                        }
+                    },
+                    email: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The email is required and cannot be empty'
+                            },
+                            emailAddress: {
+                                message: 'The input is not a valid email address'
+                            }
+                        }
+                    },
+                    password: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The password is required and cannot be empty'
+                            },
+                            different: {
+                                field: 'email',
+                                message: 'The password cannot be the same as email'
+                            },
+                            stringLength: {
+                                min: 6,
+                                max: 20,
+                                message: 'The password must be more than 6 and less than 20 characters long'
+                            }
+                        }
+                    },
+                    confirmPassword: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The confirm password is required and cannot be empty'
+                            },
+                            identical: {
+                                field: 'password',
+                                message: 'The password and its confirm are not the same'
+                            },
+                            different: {
+                                field: 'email',
+                                message: 'The password cannot be the same as email'
+                            }
+                        }
+                    },
+                    organizationName: {
+                        validators: {
+                            callback: {
+                                message: 'Enter Organization Name',
+                                callback: function() {
+                                    var e = document.getElementById("organization");
+                                    var value = e.options[e.selectedIndex].value;
+                                    var text = e.options[e.selectedIndex].text;
+                                    if (text == 'Other') {
+                                        var myLength = $("#organizationName").val().length;
+                                        if (myLength > 3) {
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+        <%if(request.getParameter("indexpage")=="login"){%>$('#loginButton').click();<%}%>
+    </script>
+</body>
+</html>

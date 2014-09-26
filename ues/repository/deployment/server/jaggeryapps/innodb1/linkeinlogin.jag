@@ -1,0 +1,11 @@
+<html>
+<head>
+	<title>Linkedin Login</title>
+	<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+  		api_key:75kmmvklws4qhj
+	</script>
+</head>
+<body>
+	Linkedin Login
+</body>
+</html>

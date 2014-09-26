@@ -1,0 +1,38 @@
+<%
+	var oper=request.getParameter("oper");
+	var file = request.getFile("file_source");
+	try{
+		if(!file.getName()==""){
+			if(uploadFile()){
+				saveData();
+			}else{
+				print("You already upload a file with this name.Please try with a different file or rename it.");
+			}
+			
+		}else{
+			saveData();
+		}
+	}catch(e){
+		print("Internal error in publication forms.Please contact support team");
+	}
+
+	function saveData(){
+		print("true");
+	}
+
+	function uploadFile(){
+		var userid="2862";
+		var folderpath="publications/"+userid;
+		var folder=new File(folderpath);
+		var fileindir=new File("publications/"+userid+"/"+file.getName());
+		if(!folder.isDirectory()){
+			folder.mkdir();
+		}
+		if(fileindir.isExists()){
+			return false;
+		}else{
+			file.move("publications/"+userid+"/"+file.getName());
+			return true;
+		}
+	}
+%>

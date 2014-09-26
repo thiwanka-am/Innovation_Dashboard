@@ -1,0 +1,14 @@
+<%include('db.jag');%>
+<%
+	try{
+		var person_id=session.get('person_id');
+		var telephoneform=request.getParameter("telephoneform");
+		var mobileform=request.getParameter("mobileform");
+		var homeform=request.getParameter("homeform");
+		var officeform=request.getParameter("officeform");
+		db.query("UPDATE person SET telephone='"+telephoneform+"',mobile='"+mobileform+"',address_home='"+homeform+"',address_office='"+officeform+"' WHERE person_id='"+person_id+"';");
+		print('true');
+	}catch(e){
+		print("Error while updating contact details.Please contact support team.Thank you.");
+	}	
+%>

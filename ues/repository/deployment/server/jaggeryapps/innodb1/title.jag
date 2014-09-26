@@ -1,0 +1,7 @@
+<%include("db.jag");%>
+<%
+function getTitles(){
+	var titles=db.query("SELECT * FROM title");
+	return titles;
+}
+%>

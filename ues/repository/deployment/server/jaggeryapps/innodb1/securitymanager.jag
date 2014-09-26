@@ -1,0 +1,9 @@
+<%
+	function isuserlog(){
+		if(session.get('person_id')!=null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+%>

@@ -1,0 +1,30 @@
+<%include("db.jag");%>
+<%	
+	var action=request.getParameter("type");
+	if(action=='sub'){
+		print(getSubResearchArea(request.getParameter("val")));
+	}else if(action=='subsub'){
+		print(getSubSubResearchArea(request.getParameter("val")));
+	}	
+	function getMainResearchArea(){
+		var mainarea=db.query("SELECT area_of_interest_id,name FROM area_of_interest");
+		return mainarea;
+	}
+	function getSubResearchArea(mainresearcharea){
+		var submainarea=db.query("SELECT sub_area_of_interest_id,name FROM sub_area_of_interest WHERE area_of_interest_id="+mainresearcharea);
+		return submainarea;
+	}
+	function getSubSubResearchArea(subresearcharea){
+		var subsubmainarea=db.query("SELECT sub_sub_area_of_interest_id,name FROM sub_sub_area_of_interest WHERE sub_area_of_interest_id="+subresearcharea);
+		return subsubmainarea;
+	}
+	function getOrganizations(){
+		var organization=db.query("SELECT organization_id,name FROM organization");
+		return organization;
+	}
+	function getSubResearchAreas(){
+		var submainarea=db.query("SELECT sub_area_of_interest_id,name FROM sub_area_of_interest");
+		return submainarea;
+	}
+	//print(getSubResearchAreas());
+%>

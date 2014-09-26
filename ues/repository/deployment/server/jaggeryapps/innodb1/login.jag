@@ -1,0 +1,39 @@
+<%include("db.jag");%>
+<%
+	var attempt=attemptManager();
+	if(attempt){
+		var email=request.getParameter("email1");
+		var password=request.getParameter("password1");
+		var person=db.query("SELECT * FROM login_details WHERE password=SHA1('"+password+"') AND email='"+email+"'");
+		if(person.length>0){
+			var record_status=db.query("SELECT record_status FROM person WHERE person_id='"+person[0].person_id+"'");
+			if(record_status[0].record_status=="1"&&email==person[0].email){
+				session.remove("attempt");
+				session.put('person_id',person[0].person_id);
+				print("true");
+			}else if(record_status[0].record_status=="0"){
+				print("Please verify your email");
+			}else if(record_status[0].record_status=="2"){
+				print("Your account has been deactivated.");
+			}
+		}else{
+			print("Invalid username or password.Please try again.");
+		}
+	}
+
+	function attemptManager(){
+		if(session.get('attempt')==null|session.get('attempt')==""){
+			session.put('attempt',1);
+			return true;
+		}else if(session.get('attempt')==1){
+			session.put('attempt',2);
+			return true;
+		}else if(session.get('attempt')==2){
+			session.put('attempt',3);
+			return true;
+		}else{
+			print('captcha');
+			return false;
+		}
+	}//End function attemptManager
+%>

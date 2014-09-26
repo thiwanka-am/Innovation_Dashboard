@@ -1,0 +1,88 @@
+<%include("db.jag");%>
+<%
+var oper=request.getParameter("oper");
+var person_id=session.get('person_id');
+if(oper=='get'){
+	getCommunicationDetails();
+}else if(oper=='edit'){
+	editCommunicationDetails();
+}else if(oper=='del'){
+	deleteCommunicationDetails();
+}else if(oper=='add'){
+	addCommunicationDetails();
+}else if(oper=='addform'){
+	addCommunicationDetailsForm();
+}
+
+function getCommunicationDetails(){
+	var result=db.query("SELECT * FROM communication_details WHERE person_id="+person_id);
+	for(var i=0;i<result.length;i++){
+		result[i].communication_type=getCommunicationType(result[i].communication_type);
+		result[i].view=getView(result[i].view);
+	}
+	print(result);
+}
+function editCommunicationDetails(){
+	var communication_details_id=request.getParameter("id");
+	var communication_type=getCommunicationType(request.getParameter("communication_type"));
+	var value=request.getParameter("value");
+	var view=getView(request.getParameter("view"));
+	db.query("UPDATE communication_details SET communication_type='"+communication_type+"',value='"+value+"',view='"+view+"' WHERE communication_details_id='"+communication_details_id+"' AND person_id='"+person_id+"';");
+	print("true");
+}
+function deleteCommunicationDetails(){
+	var id=request.getParameter("id");
+	db.query("DELETE FROM communication_details WHERE communication_details_id='"+id+"' AND person_id='"+person_id+"';");
+	print("true");
+}
+function addCommunicationDetails(){
+	var communication_type=getCommunicationType(request.getParameter("communication_type"));
+	var value=request.getParameter("value");
+	var view=getView(request.getParameter("view"));
+	db.query("INSERT INTO communication_details(communication_type,value,view,person_id) VALUES('"+communication_type+"','"+value+"','"+view+"','"+person_id+"');");
+	print("true");
+}
+function addCommunicationDetailsForm(){
+	var communication_type=getCommunicationType(request.getParameter("communication_type_form"));
+	var value=request.getParameter("value_form");
+	var view=(request.getParameter("view_form")=="on")?"1":"0";
+	db.query("INSERT INTO communication_details(communication_type,value,view,person_id) VALUES('"+communication_type+"','"+value+"','"+view+"','"+person_id+"');");
+	print("true");
+}
+function getCommunicationType(value){
+	switch(value){
+		case 'EMAIL_P':
+			return 'Email Private';
+		case 'TEL':
+			return 'Telephone';
+		case 'FAX':
+			return 'Fax';
+		case 'MOB':
+			return 'Mobile';
+		case 'EMAIL_O':
+			return 'Email Office';
+		case '4':
+			return 'EMAIL_P';
+		case '1':
+			return 'TEL';
+		case '3':
+			return 'FAX';
+		case '2':
+			return 'MOB';
+		case '5':
+			return 'EMAIL_O';
+	}
+}
+function getView(value){
+	switch(value){
+		case 1:
+			return 'Yes';
+		case 0:
+			return 'No';
+		case 'Yes':
+			return 1;
+		case 'No':
+			return 0;
+	}
+}	
+%>

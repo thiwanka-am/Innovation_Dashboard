@@ -1,0 +1,49 @@
+<%include("db.jag");%>
+<%
+	var id=request.getParameter("id");
+	if(id==null){
+		response.sendRedirect("index.jag");
+	}else{
+		var person=db.query("SELECT person.full_name,person.person_id FROM person WHERE person.person_id=(SELECT login_details.person_id FROM login_details WHERE verification_code='"+id+"')");
+%>
+<html>
+    <head>
+        <script src="js/jquery/jquery-1.9.1.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="css/captcha/jquery.realperson.css">
+        <style>
+            label { display: inline-block; width: 20%; }
+            .realperson-challenge { display: inline-block }
+        </style>
+    </head>
+    <body>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">Confirm E-mail</h4>
+        </div>
+        <div class="modal-body">
+            <center>
+            	<%if(person.length>0){
+            		db.query("UPDATE person SET record_status='1' WHERE person_id='"+person[0].person_id+"'");
+            		db.query("UPDATE login_details SET verification_code='' WHERE person_id='"+person[0].person_id+"'");
+            	%>
+            		Hello <%=person[0].full_name%>,<br/>
+	                Your e-mail confirmed.You will be redirect in to login page automatically.<br/><p><form action="index.jag" id="defaultform" method="POST"><input type="hidden" name="indexpage" value="login">If not please click on follow link<br/><a onclick="submitform()">Login</a></form></p>
+	                <img src="images/ok.jpg" width="200" height="200"><br/>
+	                <script type="text/javascript">
+	                	function submitform(){
+			            	$("#defaultform").submit();
+			            }
+	                	window.setTimeout(function() {
+			                submitform();
+			            }, 5000);
+	                </script>
+                <%}else{%>
+                Error.Please contact support team.<br/>Goto <a href="index.jag">Home</a><br/>
+                <img src="images/error1.png" width="200" height="200"><br/>
+                <%}%>
+            </center>
+        </div>
+    </body>
+</html>
+<%}%>

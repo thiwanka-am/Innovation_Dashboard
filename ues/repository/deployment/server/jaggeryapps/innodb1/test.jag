@@ -1,0 +1,191 @@
+<%include('db.jag');%>
+<html>
+<head>
+	<title></title>
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="css/select2/css/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="css/select2/select2-bootstrap.css"/>
+	<script src="js/jquery/jquery-1.9.1.js"></script>
+	<script src="js/bootstrap/bootstrap.min.js" type="text/javascript"></script>
+	<script src="js/select2/select2.js"></script>
+	<script type="text/javascript">
+		var rowidentifier=0;
+		var tabledata=[];
+		var mainvalues=<%=db.query("SELECT * FROM area_of_interest")%>;
+		var sub_values=<%=db.query("SELECT * FROM sub_area_of_interest")%>;
+		var sub_sub_values=<%=db.query("SELECT * FROM sub_sub_area_of_interest")%>;
+	</script>
+    <style type="text/css">
+        .selectwidth{
+            width:190px;
+        }
+        .CSSTableGenerator {
+            margin:0px;padding:0px;
+            width:670;
+            box-shadow: 10px 10px 5px #888888;
+            border:1px solid #3f7f00;
+            
+            -moz-border-radius-bottomleft:0px;
+            -webkit-border-bottom-left-radius:0px;
+            border-bottom-left-radius:0px;
+            
+            -moz-border-radius-bottomright:0px;
+            -webkit-border-bottom-right-radius:0px;
+            border-bottom-right-radius:0px;
+            
+            -moz-border-radius-topright:0px;
+            -webkit-border-top-right-radius:0px;
+            border-top-right-radius:0px;
+            
+            -moz-border-radius-topleft:0px;
+            -webkit-border-top-left-radius:0px;
+            border-top-left-radius:0px;
+        }.CSSTableGenerator table{
+            border-collapse: collapse;
+            border-spacing: 0;
+            width:100%;
+            margin:0px;padding:0px;
+        }.CSSTableGenerator tr:last-child td:last-child {
+            -moz-border-radius-bottomright:0px;
+            -webkit-border-bottom-right-radius:0px;
+            border-bottom-right-radius:0px;
+        }
+        .CSSTableGenerator table tr:first-child td:first-child {
+            -moz-border-radius-topleft:0px;
+            -webkit-border-top-left-radius:0px;
+            border-top-left-radius:0px;
+        }
+        .CSSTableGenerator table tr:first-child td:last-child {
+            -moz-border-radius-topright:0px;
+            -webkit-border-top-right-radius:0px;
+            border-top-right-radius:0px;
+        }.CSSTableGenerator tr:last-child td:first-child{
+            -moz-border-radius-bottomleft:0px;
+            -webkit-border-bottom-left-radius:0px;
+            border-bottom-left-radius:0px;
+        }.CSSTableGenerator tr:hover td{
+            
+        }
+        .CSSTableGenerator tr:nth-child(odd){ background-color:#d4ffaa; }
+        .CSSTableGenerator tr:nth-child(even)    { background-color:#ffffff; }.CSSTableGenerator td{
+            vertical-align:middle;
+            border:1px solid #3f7f00;
+            border-width:0px 1px 1px 0px;
+            text-align:left;
+            padding:7px;
+            font-size:10px;
+            font-family:Arial;
+            font-weight:normal;
+            color:#000000;
+        }.CSSTableGenerator tr:last-child td{
+            border-width:0px 1px 0px 0px;
+        }.CSSTableGenerator tr td:last-child{
+            border-width:0px 0px 1px 0px;
+        }.CSSTableGenerator tr:last-child td:last-child{
+            border-width:0px 0px 0px 0px;
+        }
+        .CSSTableGenerator tr:first-child td{
+                background:-o-linear-gradient(bottom, #5fbf00 5%, #3f7f00 100%);    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5fbf00), color-stop(1, #3f7f00) );
+            background:-moz-linear-gradient( center top, #5fbf00 5%, #3f7f00 100% );
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#5fbf00", endColorstr="#3f7f00");  background: -o-linear-gradient(top,#5fbf00,3f7f00);
+
+            background-color:#5fbf00;
+            border:0px solid #3f7f00;
+            text-align:center;
+            border-width:0px 0px 1px 1px;
+            font-size:14px;
+            font-family:Arial;
+            font-weight:bold;
+            color:#ffffff;
+        }
+        .CSSTableGenerator tr:first-child:hover td{
+            background:-o-linear-gradient(bottom, #5fbf00 5%, #3f7f00 100%);    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5fbf00), color-stop(1, #3f7f00) );
+            background:-moz-linear-gradient( center top, #5fbf00 5%, #3f7f00 100% );
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#5fbf00", endColorstr="#3f7f00");  background: -o-linear-gradient(top,#5fbf00,3f7f00);
+
+            background-color:#5fbf00;
+        }
+        .CSSTableGenerator tr:first-child td:first-child{
+            border-width:0px 0px 1px 0px;
+        }
+        .CSSTableGenerator tr:first-child td:last-child{
+            border-width:0px 0px 1px 1px;
+        }
+    </style>
+</head>
+<body>
+	<select id="mainresform" name="monthform" class="selectwidth"></select>
+	<select id="subresform" name="monthform" class="selectwidth"></select>
+	<select id="subsubresform" name="monthform" class="selectwidth"></select><button id="addtocollection">+</button><button id="refreshbutton">Refresh</button><br/>
+    <div class="CSSTableGenerator" id="tblData" style="display:none;">
+    	<table>
+			<tr>
+				<th>Research Area&nbsp;</th>
+				<th>Sub Research Area&nbsp;</th>
+				<th>Area of Interest&nbsp;</th>
+				<th>Remove</th>
+			</tr>
+    	</table>
+    </div>
+	<script type="text/javascript">
+		$.each(mainvalues,function(index,object){
+            $('#mainresform').append($("<option></option>").attr("value",object.area_of_interest_id).text(object.name));
+        });        
+        $('#mainresform').change(function(){
+        	var main=$('#mainresform').val();
+        	$('#subresform').empty();
+        	for(var i=0;i<sub_values.length;i++){
+        		if(main==sub_values[i].area_of_interest_id){
+        			$('#subresform').append($("<option></option>").attr("value",sub_values[i].sub_area_of_interest_id).text(sub_values[i].name));
+        		}
+        	}
+        	$('#subresform').change().call();
+        });
+        $('#subresform').change(function(){
+        	var sub=$('#subresform').val();
+        	$('#subsubresform').empty();
+        	var j=0;
+        	for(var i=0;i<sub_sub_values.length;i++){
+        		if(sub==sub_sub_values[i].sub_area_of_interest_id){
+        			j++;
+        			$('#subsubresform').append($("<option></option>").attr("value",sub_sub_values[i].sub_sub_area_of_interest_id).text(sub_sub_values[i].name));
+        		}
+        	}
+        	if(j==0){$('#subsubresform').append($("<option></option>").attr("value",0).text('No Area of Interest'));}
+        });
+        $('#addtocollection').click(function(){
+            if($("#tblData").css('display')=='none'){$("#tblData").show();}
+            var dataAvailability=false;
+            for(var i=0;i<tabledata.length;i++){
+                if(tabledata[i].matrix==($("#mainresform").val()+","+$("#subresform").val()+","+$("#subsubresform").val())){dataAvailability=true;}
+            }
+            if(dataAvailability==false){
+                tabledata.push({rowidentifier:rowidentifier,matrix:[$('#mainresform').val(),$('#subresform').val(),$('#subsubresform').val()]});
+                $("#tblData table").append("<tr id='"+rowidentifier+"'>"+"<td>"+$("#mainresform option:selected").text()+"</td>"+"<td>"+$("#subresform option:selected").text()+"</td>"+"<td>"+$("#subsubresform option:selected").text()+"</td>"+"<td><button onclick='removeTableElement.call("+(rowidentifier++)+")'>-</button></td>"+"</tr>");
+            }else{
+                alert("You already insert this Field of interest.");
+            }
+        });
+        $("#refreshbutton").click(function(){
+            $("#mainresform option:eq(0)").prop('selected',true).change().call();
+        });
+        $('#mainresform').change().call();
+        $('.select2').select2({ placeholder : '' });
+        $('.select2-remote').select2({ data: [{id:'A', text:'A'}]});
+        $('button[data-select2-open]').click(function(){
+        $('#'+$(this).data('select2-open')).select2('open');});
+        function removeTableElement(){
+            if(tabledata.length!=1){
+                $("#"+this).remove();
+                for(var i=0;i<tabledata.length;i++){
+                    if(tabledata[i].rowidentifier==this){
+                        tabledata.splice(i,1);
+                    }
+                }
+            }else{
+                alert("You want to have minimum one Area of interest");
+            }            
+        }
+	</script>
+</body>
+</html>

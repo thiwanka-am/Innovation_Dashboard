@@ -1,0 +1,60 @@
+<%include("db.jag");%>
+<%
+var oper=request.getParameter("oper");
+if(oper=='get'){
+	getAddressDetails();
+}else if(oper=='edit'){
+	editAddressDetails();
+}else if(oper=='del'){
+	deleteAddressDetails();
+}else if(oper=='add'){
+	addAddressDetails();
+}else if(oper=='addform'){
+	addAddressDetailsForm();
+}
+
+function getAddressDetails(){
+	var postalcode,addressline3,addressline4;
+	var result=db.query("SELECT * FROM address WHERE person_id='"+session.get('person_id')+"'");
+	print(result);
+}
+function editAddressDetails(){
+	var id=request.getParameter("id");
+	var type=(request.getParameter("type")=="1")?"Home":(request.getParameter("type")=="2")?"Office":"Permanent";
+	var address_line1=request.getParameter("address_line1");
+	var address_line2=request.getParameter("address_line2");
+	var address_line3=request.getParameter("address_line3");
+	var address_line4=request.getParameter("address_line4");
+	var postalcode=request.getParameter("postalcode");
+	var show=request.getParameter("show");
+	db.query("UPDATE address SET type='"+type+"',address_line1='"+address_line1+"',address_line2='"+address_line2+"',address_line3='"+address_line3+"',address_line4='"+address_line4+"',postalcode='"+postalcode+"',address.show='"+show+"' WHERE address_id='"+id+"' AND person_id='"+session.get('person_id')+"';");
+	print("true");
+}
+function deleteAddressDetails(){
+	var id=request.getParameter("id");
+	db.query("DELETE FROM address WHERE address_id='"+id+"' AND person_id='"+session.get('person_id')+"';");
+	print("true");
+}
+function addAddressDetails(){
+	var type=(request.getParameter("type")=="1")?"Home":(request.getParameter("type")=="2")?"Office":"Permanent";
+	var address_line1=request.getParameter("address_line1");
+	var address_line2=request.getParameter("address_line2");
+	var address_line3=request.getParameter("address_line3");
+	var address_line4=request.getParameter("address_line4");
+	var postalcode=request.getParameter("postalcode");
+	var show=request.getParameter("show");
+	db.query("INSERT INTO address(type,address_line1,address_line2,address_line3,address_line4,postalcode,address.show,person_id) VALUES('"+type+"','"+address_line1+"','"+address_line2+"','"+address_line3+"','"+address_line4+"','"+postalcode+"','"+show+"','"+session.get('person_id')+"');");
+	print("true");
+}
+function addAddressDetailsForm(){
+	var type=(request.getParameter("type_form")=="1")?"Home":(request.getParameter("type_form")=="2")?"Office":"Permanent";
+	var address_line1=request.getParameter("address_line1_form");
+	var address_line2=request.getParameter("address_line2_form");
+	var address_line3=request.getParameter("address_line3_form");
+	var address_line4=request.getParameter("address_line4_form");
+	var postalcode=request.getParameter("postalcode_form");
+	var show=(request.getParameter("show_form")=='on')?"Yes":"No";
+	db.query("INSERT INTO address(type,address_line1,address_line2,address_line3,address_line4,postalcode,address.show,person_id) VALUES('"+type+"','"+address_line1+"','"+address_line2+"','"+address_line3+"','"+address_line4+"','"+postalcode+"','"+show+"','"+session.get('person_id')+"');");
+	print("true");
+}
+%>

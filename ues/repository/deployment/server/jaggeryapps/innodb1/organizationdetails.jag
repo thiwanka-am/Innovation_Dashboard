@@ -1,0 +1,149 @@
+<%include('db.jag');%>
+<%
+var oper=request.getParameter("oper");
+var person_id=session.get('person_id');
+if(oper=='get'){
+	getOrganizationDetails();
+}else if(oper=='edit'){
+	editOrganizationDetails();
+}else if(oper=='del'){
+	deleteOrganizationDetails();
+}else if(oper=='add'){
+	addOrganizationDetails();
+}else if(oper=='addform'){
+	addOrganizationDetailsForm();
+}
+function getOrganizationDetails(){
+	var result=db.query("SELECT * FROM person_organization WHERE person_id='"+person_id+"'");
+	for(var i=0;i<result.length;i++){
+		var organizationname=getorganizationname(result[i].organization_id);
+		result[i].startyear = result[i].startyear.toString().substring(0,4);
+		result[i].startmonth = getMonthForPrint(result[i].startmonth);
+		result[i].endyear = (result[i].endyear.toString().substring(0,4)=="1901")?"Select":result[i].endyear.toString().substring(0,4);
+		result[i].endmonth = (result[i].endmonth==0)?"Select":getMonthForPrint(result[i].endmonth);
+		result[i].name = organizationname[0].name;
+	}
+	print(result);
+}
+function editOrganizationDetails(){
+	var printValue='true';
+	var id=request.getParameter("id");
+	var startyear=request.getParameter("startyear");
+	var startmonth=request.getParameter("startmonth");
+	var name=request.getParameter("name");
+	var endyear=1901;
+	var endmonth=0;
+	if(request.getParameter("endyear")!=0){
+		endyear=request.getParameter("endyear");
+		endmonth=request.getParameter("endmonth");
+		if(startyear==endyear&&startmonth>endmonth){
+            printValue='Start year month cannot greater than end year month.';
+        }else if(startyear>endyear){
+            printValue='Start year cannot greater than end year.';
+        }else{
+        	db.query("UPDATE person_organization SET startyear='"+startyear+"',endyear='"+endyear+"',organization_id='"+name+"',startmonth='"+startmonth+"',endmonth='"+endmonth+"' WHERE person_organization_id='"+id+"' AND person_id='"+person_id+"';");
+        }
+	}else{
+		db.query("UPDATE person_organization SET startyear='"+startyear+"',endyear='"+endyear+"',organization_id='"+name+"',startmonth='"+startmonth+"',endmonth='"+endmonth+"' WHERE person_organization_id='"+id+"' AND person_id='"+person_id+"';");
+	}
+	print(printValue);
+}
+function deleteOrganizationDetails(){
+	var id=request.getParameter("id");
+	db.query("DELETE FROM person_organization WHERE person_organization_id='"+id+"' AND person_id='"+person_id+"';");
+	print("true");
+}
+function addOrganizationDetails(){
+	var printValue='true';
+	var startyear=request.getParameter("startyear");
+	var startmonth=request.getParameter("startmonth");
+	var name=request.getParameter("name");
+	var endyear=1901;
+	var endmonth=0;
+	if(request.getParameter("endyear")!=0){
+		endyear=request.getParameter("endyear");
+		endmonth=request.getParameter("endmonth");
+		if(startyear==endyear&&startmonth>endmonth){
+            printValue='Start year month cannot greater than end year month.';
+        }else if(startyear>endyear){
+            printValue='Start year cannot greater than end year.';
+        }else{
+        	db.query("INSERT INTO person_organization(person_id,organization_id,startyear,endyear,startmonth,endmonth) VALUES('"+person_id+"','"+name+"','"+startyear+"','"+endyear+"','"+startmonth+"','"+endmonth+"');");
+        }
+	}
+	print(printValue);
+}
+function getorganizationname(id){
+	var organizationname=db.query("SELECT name FROM organization WHERE organization_id="+id);
+	return organizationname;
+}
+function addOrganizationDetailsForm(){
+	var organizationform=request.getParameter("organizationform");
+	var startyearform=parseInt(request.getParameter("startyearform"));
+	var startmonthform=request.getParameter("startmonthform");
+	var endyearform=1901;
+	var endmonthform=0;
+	if(request.getParameter("endyearform")!=0){
+		endyearform=request.getParameter("endyearform");
+		endmonthform=request.getParameter("endmonthform");
+	}	
+	db.query("INSERT INTO person_organization(person_id,organization_id,startyear,endyear,startmonth,endmonth) VALUES('"+person_id+"','"+organizationform+"','"+startyearform+"','"+endyearform+"','"+startmonthform+"','"+endmonthform+"');");
+	print("true");
+}
+function getMonthForPrint(value){
+	switch(value){
+		case 1:
+			return 'January';
+		case 2:
+			return 'February';
+		case 3:
+			return 'March';
+		case 4:
+			return 'April';
+		case 5:
+			return 'May';
+		case 6:
+			return 'June';
+		case 7:
+			return 'July';
+		case 8:
+			return 'August';
+		case 9:
+			return 'September';
+		case 10:
+			return 'October';
+		case 11:
+			return 'November';
+		case 12:
+			return 'December';
+	}
+}
+function getMonthForSave(value){
+	switch(value){
+		case 'January':
+			return '1';
+		case 'February':
+			return '2';
+		case 'March':
+			return '3';
+		case 'April':
+			return '4';
+		case 'May':
+			return '5';
+		case 'June':
+			return '6';
+		case 'July':
+			return '7';
+		case 'August':
+			return '8';
+		case 'September':
+			return '9';
+		case 'October':
+			return '10';
+		case 'November':
+			return '11';
+		case 'December':
+			return '12';
+	}
+}
+%>

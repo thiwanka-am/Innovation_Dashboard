@@ -1,0 +1,21 @@
+<%include('db.jag');%>
+<%
+	try{
+		var person_id=session.get('person_id');
+		var title=request.getParameter("title");
+		var country=request.getParameter("country");
+		var firstname=request.getParameter("firstname");
+		var lastname=request.getParameter("lastname");
+		var initials=request.getParameter("initials");
+		var nic=request.getParameter("nic");
+		var bdy=request.getParameter("bdy");
+		var gender=request.getParameter("gender");
+		var civilstatus=request.getParameter("civilstatus");
+		var profession=request.getParameter("profession");
+		var designation=request.getParameter("designation");
+		var tabledata=request.getParameter("tabledata");
+		print("true");
+	}catch(e){
+		print("Error while updating your basic details.Please contact support team.Thank You.");
+	}
+%>

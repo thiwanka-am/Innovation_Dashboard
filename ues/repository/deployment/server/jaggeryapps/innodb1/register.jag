@@ -1,0 +1,70 @@
+<%include("db.jag");%>
+<%include("emailsender.jag");%>
+<%
+	try{
+		var canuseradd=canuseradd();
+		if(canuseradd==9999){
+			//Add user
+			adduser();
+		}else{
+			handleavailableusers(canuseradd);
+		}		
+	}catch(e){
+		print("Error in signup process.Please contact support team."+e.toString());
+	}
+
+	function canuseradd(){
+		var person=db.query("SELECT person.record_status FROM person WHERE person.person_id=(SELECT login_details.person_id FROM login_details WHERE email='"+request.getParameter("email")+"')");
+		if(person.length>0){
+			return person[0].record_status;
+		}else{
+			return 9999;
+		}
+	}
+
+	function handleavailableusers(canuseradd){
+		if(canuseradd=="0"){
+			print("Your data already available in the system.We send a verify e-mail to you.Please verify your E-mail first.");
+	        //save random number and send email again.
+	        var random=makeid();
+	        db.query("UPDATE login_details SET verification_code='"+random+"' WHERE email='"+request.getParameter("email")+"'");
+	        sendconfirmemail(request.getParameter("email"),random,request.getParameter("firstname"));
+        } else if(canuseradd=="1"){
+        	print("Already you have an account with this e-mail.If you forget password please goto reset password section");
+        } else if(canuseradd=="2"){
+        	print("Your account has been deactivated with this e-mail.Please contact support team.");
+        }
+	}
+
+	function adduser(){
+		var email=request.getParameter("email");
+		var firstname=request.getParameter("firstname");
+		var gender=request.getParameter("gender");
+		var initials=request.getParameter("initials");
+		var lastname=request.getParameter("lastname");
+		var title=request.getParameter("title");
+		//var mainresarea=request.getParameter("mainresarea");
+		var organization=request.getParameter("organization");
+		var organizationName=request.getParameter("organizationName");
+		var password=request.getParameter("password");
+		var subresarea=request.getParameter("subresarea");
+		var subsubresarea=request.getParameter("subsubresarea");
+
+		db.query("INSERT INTO person(title_id,gender,first_name,last_name,initials,email,full_name,record_status,country_id,type,nationalty) "+ "VALUES('" + title + "','" + gender + "','" + firstname + "','" + lastname + "','" + initials + "',"+ "'" + email+ "','" + firstname + " " + lastname + "','" + "0" + "','" + "129" + "','" + "RES" + "','" + "SRI" + "')");
+		var person_id=db.query("SELECT person_id FROM person WHERE email='"+email+"'");
+		var random=makeid();
+		db.query("INSERT INTO login_details(email,password,verification_code,person_id) VALUES('"+email+"',SHA1('"+password+"'),'"+random+"','"+person_id[0].person_id+"')");
+		db.query("INSERT INTO person_sub_area_of_interest(person_id,sub_area_of_interest_id) VALUES('"+person_id[0].person_id+"','"+subresarea+"')");
+		db.query("INSERT INTO person_sub_sub_area_of_interest(sub_sub_area_of_interest_id,person_id) VALUES('"+subsubresarea+"','"+person_id[0].person_id+"')");
+		db.query("INSERT INTO person_organization(person_id,organization_id) VALUES('"+person_id[0].person_id+"','"+organization+"')");
+		sendconfirmemail(email,random,firstname);
+		print("true");
+	}
+	function makeid(){
+	    var text = "";
+	    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	    for(var i=0;i<10;i++)
+	        text += possible.charAt(Math.floor(Math.random() * possible.length));
+	    return text;
+	}
+%>

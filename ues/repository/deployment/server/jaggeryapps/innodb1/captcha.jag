@@ -1,0 +1,17 @@
+<%
+	if (rpHash(request.getParameter("defaultReal"))==request.getParameter("defaultRealHash")) {
+		session.remove("attempt");
+		response.sendRedirect("index.jag");
+	}else{
+		response.sendRedirect("captchaValidation.jag");
+	}
+
+	function rpHash(value) {
+        var hash = 5381;
+        value = value.toUpperCase();
+        for (var i = 0; i < value.length; i++) {
+            hash = ((hash<<5)+hash)+ value.charAt(i).charCodeAt(0);
+        }
+        return String(hash);
+    }
+%>
