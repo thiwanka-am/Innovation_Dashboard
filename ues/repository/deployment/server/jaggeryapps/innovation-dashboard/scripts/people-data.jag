@@ -1,0 +1,15 @@
+<%
+var orgId = request.getParameter("oid");
+
+function getDBData() {
+    var db = new Database("jdbc:mysql://localhost:3306/innovation_db", "root", "123");
+	var dbdt = [];
+	var result = db.query("SELECT p.person_id AS `per_id`, p.title AS `per_title`, p.first_name AS `first_name`, p.last_name AS `last_name`, p.image_name AS `per_image`, p.gender AS `per_gender` FROM person p JOIN person_organization po ON p.person_id = po.person_id WHERE po.organization_id = " + parseInt(orgId));
+	for(var i = 0; i < result.length; i++){
+		dbdt.push({"per_id": result[i].per_id, "per_title": result[i].per_title, "per_name": result[i].first_name + " " + result[i].last_name, "per_image": result[i].per_image, "per_gender": result[i].per_gender});
+	}
+	return {psn_data: dbdt};
+}
+print(getDBData());
+
+%>

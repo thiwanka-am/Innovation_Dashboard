@@ -1,0 +1,49 @@
+<%
+var type = request.getParameter("type");
+var id = request.getParameter("id");
+
+function getDBData() {
+    var db = new Database("jdbc:mysql://localhost:3306/innovation_db", "root", "123");
+	var dbdt = [];
+	
+	var resultAOI = db.query("SELECT aoi.area_of_interest_id AS `aoi_id`, aoi.name AS `aoi_name` FROM area_of_interest AS aoi");
+	var aoi_id = "";
+	var aoi_name = "";
+	var saoi_id = "";
+	var saoi_name = "";
+	var ssaoi_id = "";
+	var ssaoi_name = "";
+	
+	for (var i = 0; i < resultAOI.length; i++){
+		var aoiObj = {};
+		aoi_id = resultAOI[i].aoi_id;
+		aoi_name = resultAOI[i].aoi_name;
+		aoiObj.id = aoi_id;
+		aoiObj.name = aoi_name;
+		aoiObj.data = [];
+		var resultSAOI = db.query("SELECT saoi.sub_area_of_interest_id AS `saoi_id`, saoi.name AS `saoi_name` FROM sub_area_of_interest AS saoi WHERE saoi.area_of_interest_id = " + parseInt(aoi_id));
+		for (var j = 0; j < resultSAOI.length; j++){
+			var saoiObj = {};
+			saoi_id = resultSAOI[j].saoi_id;
+			saoi_name = resultSAOI[j].saoi_name;
+			saoiObj.id = saoi_id;
+			saoiObj.name = saoi_name;
+			saoiObj.data = [];
+			var resultSSAOI = db.query("SELECT ssaoi.sub_sub_area_of_interest_id AS `ssaoi_id`, ssaoi.name AS `ssaoi_name` FROM sub_sub_area_of_interest AS ssaoi WHERE ssaoi.sub_area_of_interest_id = " + parseInt(saoi_id));
+			for (var k = 0; k < resultSSAOI.length; k++){
+				var ssaoiObj = {};
+				ssaoi_id = resultSSAOI[k].ssaoi_id;
+				ssaoi_name = resultSSAOI[k].ssaoi_name;
+				ssaoiObj.id = ssaoi_id;
+				ssaoiObj.name = ssaoi_name;
+				saoiObj.data.push(ssaoiObj);
+			}
+			aoiObj.data.push(saoiObj);
+		}
+		dbdt.push(aoiObj);
+	}
+	return {aoi_data: dbdt};
+}
+print(getDBData());
+
+%>

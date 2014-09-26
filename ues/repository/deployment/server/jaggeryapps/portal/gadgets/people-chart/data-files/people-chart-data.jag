@@ -1,0 +1,23 @@
+<%
+var type = request.getParameter("type");
+var id = request.getParameter("id");
+
+function getDBData() {
+    var db = new Database("jdbc:mysql://localhost:3306/innovation_db", "root", "123");
+	var dbdt = [];
+	if(type == null || type == "" || type == "aoi"){
+		var result = db.query("SELECT aoi.name AS `aoi_name`, aoi.area_of_interest_id AS `aoi_id`, COUNT(psaoi.person_id) AS `people_count` FROM area_of_interest AS aoi LEFT JOIN sub_area_of_interest AS saoi ON saoi.area_of_interest_id = aoi.area_of_interest_id LEFT JOIN person_sub_area_of_interest AS psaoi ON saoi.sub_area_of_interest_id = psaoi.sub_area_of_interest_id GROUP BY aoi.area_of_interest_id");
+		for(var i = 0; i < result.length; i++){
+			dbdt.push({"name": result[i].aoi_name, "value": result[i].people_count, "id": result[i].aoi_id, "type": "aoi"});
+		}
+	} else if (type == "saoi"){
+		var result = db.query("SELECT saoi.name AS `saoi_name`, saoi.sub_area_of_interest_id AS `saoi_id`, COUNT(p.person_id) AS `people_count` FROM area_of_interest AS aoi LEFT JOIN sub_area_of_interest AS saoi ON saoi.area_of_interest_id = aoi.area_of_interest_id LEFT JOIN person_sub_area_of_interest AS psaoi ON saoi.sub_area_of_interest_id = psaoi.sub_area_of_interest_id LEFT JOIN person AS p ON psaoi.person_id = p.person_id WHERE aoi.area_of_interest_id=" + parseInt(id) + " GROUP BY saoi.sub_area_of_interest_id");
+		for(var i = 0; i < result.length; i++){
+			dbdt.push({"name": result[i].saoi_name, "value": result[i].people_count, "id": result[i].saoi_id, "type": "saoi"});
+		}
+	}
+	return {people_count_data: dbdt};
+}
+print(getDBData());
+
+%>

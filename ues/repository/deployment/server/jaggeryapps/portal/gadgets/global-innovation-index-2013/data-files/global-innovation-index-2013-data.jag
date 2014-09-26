@@ -1,0 +1,186 @@
+<%
+	var db = new Database("jdbc:mysql://localhost:3306/innovation_db", "root", "123");
+	var globalIndexId = request.getParameter("giId");
+	var pillarId = request.getParameter("pillarId");
+	
+	var dataObj = {};
+	
+	if(globalIndexId != null && pillarId == null){
+		dataObj.radar_data = getRadarDataOfPillars(globalIndexId);
+	} else if (pillarId != null){
+		dataObj.radar_data = getRadarDataOfNis(pillarId);
+	}
+	
+	print(dataObj);
+	
+	function getRadarDataOfPillars(giId){
+		var radarData = [];
+		var cntryCodes = ["LK"];
+		var selectedRegionIndex = 0;
+		var regionCodes = [{name: "Southern Asia", code:"034"}, {name: "Europe", code: "150"}, {name: "Africa", code: "002"}, {name: "Americas", code: "019"}, {name: "Oceania", code: "009"}];
+		
+		var countryPillarScores = getPillarScoresForCountry(giId, cntryCodes[0]);
+		var regionPillarScores = getPillarAverageScoresForRegion(giId, regionCodes[selectedRegionIndex].code);
+		var globalPillarScores = getPillarAverageScoresForWorld(giId);
+
+		// set country data
+		var countryObj = {};
+		countryObj.name = "Sri Lanka";
+		countryObj.data = getFormatedPillarData(countryPillarScores);
+		radarData.push(countryObj);
+		
+		// set regional data
+		var regionObj = {};
+		regionObj.name = regionCodes[selectedRegionIndex].name;
+		regionObj.data = getFormatedPillarData(regionPillarScores);
+		radarData.push(regionObj);
+		
+		// set global data
+		var globalObj = {};
+		globalObj.name = "Global Average";
+		globalObj.data = getFormatedPillarData(globalPillarScores);
+		radarData.push(globalObj);
+		
+		normalizeRadarData(radarData);
+		
+		return radarData;
+	}
+	
+	function getRadarDataOfNis(pId){
+		var radarData = [];
+		var cntryCodes = ["LK"];
+		var regionCodes = ["034", "150", "002", "019", "009"]; // Southern Asia, Europe, Africa, Americas, Oceania
+		
+		var countryNiScores = getNiScoresForCountry(pId, cntryCodes[0]);
+		var regionNiScores = getNiAverageScoresForRegion(pId, regionCodes[0]);
+		var globalNiScores = getNiAverageScoresForWorld(pId);
+		
+		// set country data
+		var countryObj = {};
+		countryObj.name = "Sri Lanka";
+		countryObj.data = getFormatedNiData(countryNiScores);
+		radarData.push(countryObj);
+		
+		// set regional data
+		var regionObj = {};
+		regionObj.name = "Southern Asia";
+		regionObj.data = getFormatedNiData(regionNiScores);
+		radarData.push(regionObj);
+		
+		// set global data
+		var globalObj = {};
+		globalObj.name = "Global Average";
+		globalObj.data = getFormatedNiData(globalNiScores);
+		radarData.push(globalObj);
+		
+		normalizeRadarData(radarData);
+		
+		return radarData;
+	}
+	
+	function getFormatedPillarData(pArr){
+		var pillarData = [];
+		for(var i = 0; i < pArr.length; i++){
+			pillarData.push({"axis": pArr[i].pillarName, "value": pArr[i].pillarScore, "dispvalue": pArr[i].pillarScore, "id": pArr[i].pillarId});
+			
+		}
+		return pillarData;
+	}
+	
+	function getFormatedNiData(niArr){
+		var niData = [];
+		for(var i = 0; i < niArr.length; i++){
+			niData.push({"axis": niArr[i].niName, "value": niArr[i].niScore, "dispvalue": niArr[i].niScore, "id": niArr[i].niId});
+		}
+		return niData;
+	}
+	
+	function getPillarScoresForCountry(giId, countryCode){
+		var result = db.query("SELECT p.name AS `pillar_name`, pd.score AS `pillar_score`, p.pillar_id AS `pillar_id` FROM global_index AS gi JOIN pillar AS p ON gi.global_index_id=p.global_index_id JOIN pillar_detail AS pd ON p.pillar_id=pd.pillar_id JOIN country AS c ON pd.country_id=c.country_id WHERE gi.global_index_id=" + parseInt(giId) + " AND c.code='" + countryCode + "' ORDER BY p.pillar_id");
+		var dbdt = [];
+		for(var i = 0; i < result.length; i++){
+			dbdt.push({"pillarName": result[i].pillar_name, "pillarScore": result[i].pillar_score, "pillarId": result[i].pillar_id});
+		}
+		return dbdt;
+	}
+	
+	function getPillarAverageScoresForRegion(giId, regionCode){
+		var result = db.query("SELECT p.name AS `pillar_name`, AVG(pd.score) AS `avg_score`, p.pillar_id AS `pillar_id` FROM global_index AS gi JOIN pillar AS p ON gi.global_index_id=p.global_index_id JOIN pillar_detail AS pd ON p.pillar_id=pd.pillar_id JOIN country AS c ON pd.country_id=c.country_id WHERE gi.global_index_id=" + parseInt(giId) + " AND c.region='" + regionCode + "' GROUP BY p.pillar_id ORDER BY p.pillar_id");
+		var dbdt = [];
+		for(var i = 0; i < result.length; i++){
+			dbdt.push({"pillarName": result[i].pillar_name, "pillarScore": result[i].avg_score, "pillarId": result[i].pillar_id});
+		}
+		return dbdt;
+	}
+	
+	function getPillarAverageScoresForWorld(giId){
+		var result = db.query("SELECT p.name AS `pillar_name`, AVG(pd.score) AS `avg_score`, p.pillar_id AS `pillar_id` FROM global_index AS gi JOIN pillar AS p ON gi.global_index_id=p.global_index_id JOIN pillar_detail AS pd ON p.pillar_id=pd.pillar_id WHERE gi.global_index_id=" + parseInt(giId) + " GROUP BY p.name ORDER BY p.pillar_id");
+		var dbdt = [];
+		for(var i = 0; i < result.length; i++){
+			dbdt.push({"pillarName": result[i].pillar_name, "pillarScore": result[i].avg_score, "pillarId": result[i].pillar_id});
+		}
+		return dbdt;
+	}
+	
+	function getNiScoresForCountry(pId, countryCode){
+		var result = db.query("SELECT ni.name AS `ni_name`, nid.score AS `ni_score`, ni.national_indicator_id AS `ni_id` FROM pillar AS p JOIN national_indicator AS ni ON p.pillar_id = ni.pillar_id JOIN national_indicator_detail AS nid ON ni.national_indicator_id = nid.national_indicator_id JOIN country AS c ON nid.country_id = c.country_id WHERE c.code = '" + countryCode + "' AND p.pillar_id = " + parseInt(pId) + " ORDER BY ni.national_indicator_id");
+		var dbdt = [];
+		for(var i = 0; i < result.length; i++){
+			dbdt.push({"niName": result[i].ni_name, "niScore": result[i].ni_score, "niId": result[i].ni_id});
+		}
+		return dbdt;
+	}
+	
+	function getNiAverageScoresForRegion(pId, regionCode){
+		var result = db.query("SELECT ni.name AS `ni_name`, AVG(nid.score) AS `avg_score`, ni.national_indicator_id AS `ni_id` FROM global_index AS gi JOIN pillar AS  p ON gi.global_index_id=p.global_index_id JOIN national_indicator AS ni ON p.pillar_id=ni.pillar_id JOIN national_indicator_detail AS nid ON ni.national_indicator_id=nid.national_indicator_id JOIN country AS c ON nid.country_id=c.country_id WHERE c.region='" + regionCode + "' AND p.pillar_id=" + parseInt(pId) + " GROUP BY ni.national_indicator_id ORDER BY ni.national_indicator_id");
+		var dbdt = [];
+		for(var i = 0; i < result.length; i++){
+			dbdt.push({"niName": result[i].ni_name, "niScore": result[i].avg_score, "niId": result[i].ni_id});
+		}
+		return dbdt;
+	}
+	
+	function getNiAverageScoresForWorld(pId){
+		var result = db.query("SELECT ni.name AS `ni_name`, AVG(nid.score) AS `avg_score`, ni.national_indicator_id AS `ni_id` FROM global_index AS gi JOIN pillar AS p ON gi.global_index_id=p.global_index_id JOIN national_indicator AS ni ON p.pillar_id=ni.pillar_id JOIN national_indicator_detail AS nid ON ni.national_indicator_id=nid.national_indicator_id WHERE p.pillar_id=" + parseInt(pId) + " GROUP BY ni.national_indicator_id ORDER BY ni.national_indicator_id");
+		var dbdt = [];
+		for(var i = 0; i < result.length; i++){
+			dbdt.push({"niName": result[i].ni_name, "niScore": result[i].avg_score, "niId": result[i].ni_id});
+		}
+		return dbdt;
+	}
+	
+	function normalizeRadarData(dataArr){
+		var log = new Log();
+		var outLen = dataArr.length;
+		var tempInLen;
+		
+		tempInLen = dataArr[0].data.length;
+		var tempOutLen = dataArr.length;
+		
+		for(var p = 0; p < tempInLen; p++) {
+			var max = -100;
+			var inObj;
+			// select maximum value
+			for(var q = 0; q < tempOutLen; q++) {
+				inObj = dataArr[q].data[p];
+				var strValue = inObj.value;
+				var dValue = parseFloat(strValue);
+				if(strValue !== null){
+					if(max < dValue){
+						max = dValue;
+					}
+				}
+			}
+			// divide values from maximum
+			for(var q = 0; q < tempOutLen; q++) {
+				inObj = dataArr[q].data[p];
+				var strValue = inObj.value;
+				var dValue = parseFloat(strValue);
+				if(strValue !== null){
+					inObj.value =  dValue/max;
+				}
+			}
+		}
+	}
+	
+%>

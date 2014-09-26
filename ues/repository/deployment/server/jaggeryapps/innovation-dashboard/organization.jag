@@ -1,0 +1,239 @@
+<%
+	include_once("scripts/db.jag");
+
+	var oid = parseInt(request.getParameter("oid"));
+	var isValid = true;
+	var orgName, orgImage, orgWeb, orgQSRank, orgTHRank, orgType, orgSector, depCount, facCount;
+	
+	if(oid == null || isNaN(oid) || oid < 0){
+		isValid = false;
+	}
+
+	if(isValid){
+		var result = db.query("SELECT o.name AS `org_name`, o.image_name AS `org_image`, o.web_url AS `org_web`, o.qs_rank AS `org_qs_rank`, o.th_rank AS `org_th_rank`, o.type AS `org_type`, o.sector AS `org_sector`, COUNT(DISTINCT od.department_id) AS `dep_count`, COUNT(DISTINCT f.idfaculty) AS `fac_count` FROM organization o LEFT JOIN country c ON c.country_id = o.country_id LEFT JOIN organization_department od ON od.organization_id = o.organization_id LEFT JOIN department d ON d.department_id = od.department_id LEFT JOIN faculty f ON f.idfaculty = d.faculty_id WHERE o.record_status = 1 AND c.code = 'LK' AND o.organization_id = " + parseInt(oid));
+		if(result.length > 0){
+			orgName = result[0].org_name;
+			orgImage = result[0].org_image;
+			orgWeb = result[0].org_web;
+			orgQSRank = result[0].org_qs_rank;
+			orgTHRank = result[0].org_th_rank;
+			orgType = result[0].org_type;
+			orgSector = result[0].org_sector;
+			depCount = result[0].dep_count;
+			facCount = result[0].fac_count;
+			
+			if(orgName == null || orgName == ""){
+				isValid = false;
+			}
+		} else {
+			isValid = false;
+		}
+	}
+
+%>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title><% if(isValid){print(orgName);} else {print("Invalid Organization");} %> - Innovation Dashboard</title>
+		<link type="image/x-icon" href="images/dev/favicon.ico" rel="shortcut icon" />
+
+		<!-- Bootstrap core CSS -->
+		<!-- <link href="css2/bootstrap/bootstrap.min.css" rel="stylesheet"> -->
+		<link href="css2/spacelab/bootstrap.min.css" rel="stylesheet">
+		<link href="css2/styles.css" rel="stylesheet">
+
+		<script src="js2/jquery/jquery-1.11.1.js"></script>
+		<script src="js2/bootstrap/bootstrap.js"></script>
+		
+		<!-- google maps -->
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh-rKFkb1hhmElavDCGaaUQnITpIw3-MI&libraries=geometry"></script>
+		<script src="js2/google-maps/markerwithlabel.js" type="text/javascript"></script>
+		<script src="js2/scripts/collaborations.js"></script>
+		<script src="js2/scripts/org-peo.js"></script>
+	</head>
+
+	<body>
+		<% include_once("util/topnav.jag"); %>
+
+		<div class="container-fluid">
+			<% if(isValid){ %>
+			<div class="row">
+				<div class="col-md-1">
+					<div style="text-align: center;">
+						<img src="images/organizations/<% print(orgImage); %>" class="img">
+					</div>
+				</div>
+				<div class="col-md-11">
+					<div class="page-header">
+						<h1><% print(orgName); %></h1>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">
+					<div style="margin-bottom: 10px;"><a href="<% print(orgWeb); %>" target="_blank"><% print(orgWeb); %></a></div>
+					<div>Web</div>
+				</div>
+				<div class="col-md-2">
+					<div style="margin-bottom: 10px;"><strong><% if(orgQSRank != null){ print(orgQSRank);} else {print("n/a");} %></strong></div>
+					<div>QS Rank</div>
+				</div>
+				<div class="col-md-2">
+					<div style="margin-bottom: 10px;"><strong><% if(orgTHRank != null){ print(orgTHRank);} else {print("n/a");} %></strong></div>
+					<div>Times Higher Rank</div>
+				</div>
+				<div class="col-md-2">
+					<div style="margin-bottom: 10px;">
+						<strong>
+						<%
+							if(orgSector == null && orgType == null){
+								print("n/a");
+							} else {
+								if(orgSector != null){
+									if(orgSector == "GOV"){
+										print("Government ");
+									} else if(orgSector == "PRI"){
+										print("Private ");
+									}
+								}
+								if(orgType != null){
+									if(orgType == "UNI"){
+										print("University");
+									} else if(orgType == "INS"){
+										print("Institute");
+									}
+								}
+							}
+						%>
+						</strong>
+					</div>
+					<div>Type</div>
+				</div>
+				<div class="col-md-2">
+					<div style="margin-bottom: 10px;"><strong><% print(depCount); %></strong></div>
+					<div>Departments</div>
+				</div>
+				<div class="col-md-2">
+					<div style="margin-bottom: 10px;"><strong><% print(facCount); %></strong></div>
+					<div>Faculties</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<a id="collaborations"></a>
+					<div class="page-header">
+						<div class="row">
+							<div class="col-md-10">
+								<h3>International Collaborations</h3>
+							</div>
+							<div class="col-md-2">
+								<div style="text-align: right; margin-top: 20px;">
+									<div class="btn-group" data-toggle="buttons">
+										<label class="btn btn-primary btn-sm active"><input type="radio" name="clb-view" id="map-view" value="map" checked>Map</label>
+										<label class="btn btn-primary btn-sm"><input type="radio" name="clb-view" id="list-view" value="list">List</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div style="margin: 10px 0px; height: 500px;">
+						<div id="placeholder" style="height: 100%; width: 100%;"></div>
+						<div id="clb-org-details" style="height: 500px; width: 100%; overflow: auto;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="page-header">
+						<h3>Departments</h3>
+					</div>
+					<div>
+						<ol>
+						<%
+						var result = db.query("SELECT d.description AS `dep_name` FROM organization o LEFT JOIN organization_department od ON o.organization_id = od.organization_id LEFT JOIN department d ON d.department_id = od.department_id WHERE o.organization_id = " + oid); 
+						for(var i = 0; i < result.length; i++){
+							var depName = result[i].dep_name;
+						%>
+						<li><%=depName %></li>
+						<% } %>
+						</ol>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="page-header">
+						<h3>Faculties</h3>
+					</div>
+					<div>
+						<ol>
+						<%
+						var result = db.query("SELECT DISTINCT f.description AS `fac_name` FROM organization o LEFT JOIN organization_department od ON o.organization_id = od.organization_id LEFT JOIN department d ON d.department_id = od.department_id LEFT JOIN faculty f ON d.faculty_id = f.idfaculty WHERE o.organization_id = " + oid);  
+						for(var i = 0; i < result.length; i++){
+							var facName = result[i].fac_name;
+						%>
+						<li><%=facName %></li>
+						<% } %>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="page-header">
+						<h3>Reseachers</h3>
+					</div>
+					<div id="people-details">
+							<%
+							var result = db.query("SELECT p.person_id AS `per_id`, p.title AS `per_title`, p.first_name AS `first_name`, p.last_name AS `last_name`, p.image_name AS `per_image`, p.gender AS `per_gender` FROM person p JOIN person_organization po ON p.person_id = po.person_id WHERE po.organization_id = " + oid + "");
+							for(var i = 0; i < result.length; i++){
+								var perId = result[i].per_id;
+								var perTitle = result[i].per_title;
+								var perFName = result[i].first_name;
+								var perLName = result[i].last_name;
+								var perImage = result[i].per_image;
+								var perGender = result[i].per_gender;
+							%>
+							<div style="margin: 20px 0px 20px;">
+								<div class="row">
+									<div class="col-md-1">
+										<% print(parseInt(i+1).toString() + "."); %>
+									</div>
+									<div class="col-md-2">
+										<% if(perImage == null){
+											if(perGender == 0){
+											%>
+											<img src="images/people/blank/woman.svg" style="width: 80px;" />
+											<% } else { %>
+											<img src="images/people/blank/man.svg" style="width: 80px;" />
+										<% } } else { %>
+										<img src="<% print("images/people/" + perImage); %>" style="width: 80px;" />
+										<% } %>
+									</div>
+									<div class="col-md-9">
+										<h4><a href="person.jag?pid=<%=perId %>"><% print(perTitle + " " +perFName + " " + perLName); %></a></h4>
+									</div>
+								</div>
+							</div>
+						<% } %>
+					</div>
+					<div id="people-pagination" class="text-center"></div>
+				</div>
+			</div>
+			<input type="hidden" id="orgid" value="<%=oid %>" />
+			<% } else { %>
+			<div class="row">
+				<div class="col-md-12">
+					<h3>Not Found</h3>
+					<p>The organization you are looking for is not found in Sri Lanka Innovation Dashboard</p>
+					<p>Go to <a href="index.jag">home page</a></p>
+				</div>
+			</div>
+			<input type="hidden" id="orgid" value="" />
+			<% } %>
+		</div>
+		
+		<% include_once("util/footer.jag"); %>
+	</body>
+</html>
+<% db.close(); %>

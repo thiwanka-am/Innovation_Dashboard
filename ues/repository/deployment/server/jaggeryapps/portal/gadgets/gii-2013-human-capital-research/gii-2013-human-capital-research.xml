@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <Module>
+    <ModulePrefs title="GII 2013 - Human Capital &#38; Research"
+                 author="LSF"
+                 height="230"
+                 scrolling="true"
+                 tags="gii,charts,visualization,data"
+                 description="A Chart gadget, that shows you Human Capital Research Pillar in Global Innovation Index 2013">
+		<Require feature="setprefs" />
+     </ModulePrefs>
+    <UserPref name="dataSource"
+              display_name="Data Source"
+              default_value="../../portal/gadgets/gii-2013-human-capital-research/data-files/gii-2013-human-capital-research-data.jag">
+    </UserPref>
+    <UserPref name="chartType" display_name="Chart Type" default_value="radar" />
+    <Content type="html">
+    <![CDATA[
+ <html>
+ <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>GII 2013 - Human Capital &#38; Research</title>
+	
+	<link href="../../themes/portal/css/flot-graph.css" rel="stylesheet" type="text/css">
+	<link href="../../themes/portal/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="css/gii-2013-human-capital-research.css" rel="stylesheet" type="text/css">
+	
+	<script language="javascript" type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script language="javascript" type="text/javascript" src="js/d3.min.js" charset="utf-8"></script>
+	<script language="javascript" type="text/javascript" src="js/NormRadarChart.js" charset="utf-8"></script>
+	<script language="javascript" type="text/javascript" src="js/GroupedBarChart.js" charset="utf-8"></script>
+	<script language="javascript" type="text/javascript" src="js/d3-options-radar.js"></script>
+	<script language="javascript" type="text/javascript" src="js/gii-2013-human-capital-research-core.js"></script>
+</head>
+
+<body>
+	<div>
+		<div id="optionPanel">
+			<div id="optionsLeft">
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-mini btn-success" id="btnChartTypeRadar">Radar</button>
+					<button type="button" class="btn btn-default btn-mini" id="btnChartTypeBar">Bar</button>
+					<button type="button" class="btn btn-default btn-mini" id="btnChartTypeList">List</button>
+				</div>
+				<span id="chartState" style="display: inline-block; margin: 4px 0px 0px 6px; font-size: 12px; font-weight: bold;"></span>
+			</div>
+			<div id="optionsRight" class="seriesContainer">
+				<button class="btn btn-mini back">&#171; back</button>
+			</div>
+		</div>
+		<div id="placeholder" style="height:86%;"></div>
+	</div>
+</body>
+</html>
+
+    ]]>
+</Content>
+</Module>
+
+

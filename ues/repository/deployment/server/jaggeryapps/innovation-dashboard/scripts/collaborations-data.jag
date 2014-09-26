@@ -1,0 +1,44 @@
+<%
+var orgId = request.getParameter("id");
+
+function getDBData() {
+    var db = new Database("jdbc:mysql://localhost:3306/innovation_db", "root", "123");
+	var dbdt = [];
+	var result = db.query("SELECT org.name AS `org_name`, cou.name AS `cou_name` FROM collaboration AS clb LEFT JOIN organization AS org ON clb.org2_id = org.organization_id LEFT JOIN country AS cou ON cou.country_id = org.country_id WHERE clb.org1_id = " + parseInt(orgId) + " AND cou.code <> 'LK'");
+	for(var i = 0; i < result.length; i++){
+		dbdt.push({"org_name": result[i].org_name, "cou_name": result[i].cou_name});
+	}
+	
+	var dbdtMap = [];
+	var resultMap = db.query("SELECT cou.country_id AS `cou_id`, cou.name AS `cou_name`, COUNT(clb.org2_id) AS `org_count` FROM collaboration AS clb LEFT JOIN organization AS org ON clb.org2_id = org.organization_id LEFT JOIN country AS cou ON cou.country_id = org.country_id WHERE clb.org1_id = " + parseInt(orgId) + " AND cou.code <> 'LK' GROUP BY cou.country_id");
+	for(var i = 0; i < resultMap.length; i++){
+		var mapDataObj = {};
+		mapDataObj.cou_name = resultMap[i].cou_name;
+		mapDataObj.org_count = resultMap[i].org_count;
+		
+		var dbdtMapOrgs = [];
+		var resultMapOrg = db.query("SELECT org.name AS `org_name` FROM collaboration AS clb LEFT JOIN organization AS org ON clb.org2_id = org.organization_id LEFT JOIN country AS cou ON cou.country_id = org.country_id WHERE clb.org1_id = " + parseInt(orgId) + " AND cou.country_id = " + parseInt(resultMap[i].cou_id));
+		for(var j = 0; j < resultMapOrg.length; j++){
+			dbdtMapOrgs.push(resultMapOrg[j].org_name);
+		}
+		mapDataObj.orgs = dbdtMapOrgs;
+		
+		dbdtMap.push(mapDataObj);
+	}
+	
+	var startOrgData = {};
+	var resultOrg = db.query("SELECT org.name AS `org_name`, org.image_name AS `org_image` FROM organization org WHERE org.record_status = 1 AND org.organization_id = " + parseInt(orgId));
+	if(resultOrg.length > 0){
+		startOrgData.org_name = resultOrg[0].org_name;
+		startOrgData.org_image =  resultOrg[0].org_image;
+	}
+	
+	return {
+		clb_data: dbdt,
+		map_data: dbdtMap,
+		map_start_org: startOrgData
+	};
+}
+print(getDBData());
+
+%>

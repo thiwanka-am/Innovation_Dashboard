@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <Module>
+    <ModulePrefs title="Organizations and Institutes"
+                 author="LSF"
+                 height="230"
+                 scrolling="true"
+                 tags="charts,bar,visualization,data,google,maps"
+                 description="A map, that shows the geological locations of organizations and institutes of Sri Lanka">
+     </ModulePrefs>
+    <UserPref name="dataSource"
+              display_name="Data Source"
+              default_value="../../portal/gadgets/organization-map/data-files/organization-map-data.jag">
+    </UserPref>
+    <Content type="html">
+    <![CDATA[
+ <html>
+ <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Organizations and Institutes</title>
+	<link href="../../themes/portal/css/flot-graph.css" rel="stylesheet" type="text/css">
+	<link href="../../themes/portal/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		.gmnoprint img {
+			max-width: none; 
+		}
+	</style>
+	<script language="javascript" type="text/javascript" src="../../js/flot/jquery.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh-rKFkb1hhmElavDCGaaUQnITpIw3-MI"></script>
+	<script language="javascript" type="text/javascript" src="js/organization-map-core.js"></script>
+</head>
+
+<body>
+	<div>
+		<div id="placeholder" style="height:98%;"></div>
+	</div>
+</body>
+</html>
+
+    ]]>
+</Content>
+</Module>
+
+

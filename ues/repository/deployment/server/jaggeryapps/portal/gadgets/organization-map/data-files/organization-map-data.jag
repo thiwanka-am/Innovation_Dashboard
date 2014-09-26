@@ -1,0 +1,16 @@
+<%
+var type = request.getParameter("type");
+var id = request.getParameter("id");
+
+function getDBData() {
+    var db = new Database("jdbc:mysql://localhost:3306/innovation_db", "root", "123");
+	var dbdt = [];
+	var result = db.query("SELECT org.name AS org_name, org.image_name AS org_image FROM organization AS org");
+	for(var i = 0; i < result.length; i++){
+		dbdt.push({"name": result[i].org_name, "image": result[i].org_image});
+	}
+	return {org_data: dbdt};
+}
+print(getDBData());
+
+%>
