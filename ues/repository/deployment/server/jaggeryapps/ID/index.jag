@@ -1,0 +1,746 @@
+<%
+var user = require('/modules/user.js').current();
+if (!user) {
+    response.sendRedirect('/ID/login');
+}
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>My Dashboard | User Engagement Server</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <!-- END imports needed for gadget rendering -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/font-awesome-ie7.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" type="text/css" href="css/navigation.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jquery.gridster.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/portal-dashboard-designer.css"/>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="/portal/themes/portal/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="img/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="img/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          href="img/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
+
+    <title>COSTI - Home</title>
+  <link href="index.html" rel="canonical" />
+  <link href="indexc0d0.html?format=feed&amp;type=rss" rel="alternate" type="application/rss+xml" title="RSS 2.0" />
+  <link href="index7b17.html?format=feed&amp;type=atom" rel="alternate" type="application/atom+xml" title="Atom 1.0" />
+  <link href="http://costi.gov.lk/templates/jsn_epic_pro/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+  <link rel="stylesheet" href="http://costi.gov.lk/components/com_imageshow/assets/css/style.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/media/jui/css/bootstrap.min.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/media/jui/css/bootstrap-responsive.min.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/media/jui/css/bootstrap-extended.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/plugins/system/jsntplframework/assets/3rd-party/bootstrap/css/bootstrap-frontend.min.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/plugins/system/jsntplframework/assets/3rd-party/bootstrap/css/bootstrap-responsive-frontend.min.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/templates/system/css/system.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/templates/system/css/general.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/templates/jsn_epic_pro/css/template.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/templates/jsn_epic_pro/css/template_pro.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/templates/jsn_epic_pro/css/colors/green.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/templates/jsn_epic_pro/css/styles/business.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/templates/jsn_epic_pro/css/layouts/jsn_wide.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/templates/jsn_epic_pro/css/layouts/jsn_mobile.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/templates/jsn_epic_pro/css/jsn_social_icons.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/templates/jsn_epic_pro/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/media/system/css/modal.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/components/com_jevents/views/geraint/assets/css/modstyle.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/plugins/jsnimageshow/themeslider/assets/css/style.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/plugins/jsnimageshow/themeslider/assets/css/skitter/skitter.styles.css" type="text/css" />
+  <link rel="stylesheet" href="http://costi.gov.lk/media/mod_falang/css/template.css" type="text/css" />
+  <style type="text/css">
+    div.jsn-modulecontainer ul.menu-mainmenu ul,
+    div.jsn-modulecontainer ul.menu-mainmenu ul li {
+        width: 200px;
+    }
+    div.jsn-modulecontainer ul.menu-mainmenu ul ul {
+        margin-left: 199px;
+    }
+    #jsn-pos-toolbar div.jsn-modulecontainer ul.menu-mainmenu ul ul {
+        margin-right: 199px;
+        margin-left : auto
+    }
+    div.jsn-modulecontainer ul.menu-sidemenu ul,
+    div.jsn-modulecontainer ul.menu-sidemenu ul li {
+        width: 200px;
+    }
+    div.jsn-modulecontainer ul.menu-sidemenu li ul {
+        right: -200px;
+    }
+    body.jsn-direction-rtl div.jsn-modulecontainer ul.menu-sidemenu li ul {
+        left: -200px;
+        right: auto;
+    }
+    div.jsn-modulecontainer ul.menu-sidemenu ul ul {
+        margin-left: 199px;
+    }
+.jsn-themeslider-skitter-4LpgR .label_skitter {filter:alpha(opacity=75);opacity: 0.75;}.jsn-themeslider-skitter-4LpgR .label_skitter p.jsn-themeslider-caption-title {font-family: Verdana;
+font-size: 12px;
+font-weight: bold;
+text-align: left;
+color: #E9E9E9;}.jsn-themeslider-skitter-4LpgR .label_skitter p.jsn-themeslider-caption-description {font-family: Arial;
+font-size: 11px;
+font-weight: normal;
+text-align: left;
+color: #AFAFAF;}.jsn-themeslider-skitter-4LpgR .label_skitter a.jsn-themeslider-caption-link {font-family: Verdana;
+font-size: 11px;
+font-weight: bold;
+text-align: right;
+color: #E06614;}.jsn-themeslider-skitter-4LpgR .label_skitter {bottom: 0;}.jsn-themeslider-skitter-4LpgR .info_slide {top: 15px;}.jsn-themeslider-skitter-4LpgR .info_slide_dots {top: 15px;}
+  </style>
+  <script src="http://costi.gov.lk/media/system/js/mootools-core.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/media/system/js/core.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/media/system/js/caption.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/media/jui/js/jquery.min.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/media/jui/js/jquery-noconflict.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/media/jui/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/media/system/js/mootools-more.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/plugins/system/jsntplframework/assets/joomlashine/js/noconflict.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/plugins/system/jsntplframework/assets/joomlashine/js/utils.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/templates/jsn_epic_pro/js/jsn_template.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/media/system/js/modal.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/components/com_imageshow/assets/js/jquery.min.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/plugins/jsnimageshow/themeslider/assets/js/jsn_is_conflict.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/plugins/jsnimageshow/themeslider/assets/js/skitter/jquery.easing.1.3.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/plugins/jsnimageshow/themeslider/assets/js/skitter/jquery.animate-colors-min.js" type="text/javascript"></script>
+  <script src="http://costi.gov.lk/plugins/jsnimageshow/themeslider/assets/js/skitter/jquery.skitter.js" type="text/javascript"></script>
+  <script type="text/javascript">
+window.addEvent('load', function() {
+                new JCaption('img.caption');
+            });
+(function($){
+                $('.dropdown-toggle').dropdown();
+                })(jQuery);
+JSNTemplate.initTemplate({
+                    templatePrefix          : "jsn_epic_pro_",
+                    templatePath            : "/templates/jsn_epic_pro",
+                    enableRTL               : 0,
+                    enableGotopLink         : 1,
+                    enableMobile            : 1,
+                    enableMobileMenuSticky  : 1,
+                    enableDesktopMenuSticky : 1,
+                    responsiveLayout        : ["mobile","wide"]
+                });
+            
+        window.addEvent('domready', function() {
+
+            SqueezeBox.initialize({});
+            SqueezeBox.assign($$('a.modal'), {
+                parse: 'rel'
+            });
+        });
+jQuery(document).ready(function()
+                {
+                    jQuery('.hasTooltip').tooltip({});
+                });
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+</head>
+<body id="jsn-master" class="jsn-textstyle-business jsn-color-green jsn-direction-ltr jsn-responsive jsn-mobile jsn-joomla-30  jsn-com-content jsn-view-featured jsn-itemid-101 jsn-homepage">
+    <a name="top" id="top"></a>
+        <div id="jsn-page" class="container">
+            <div id="jsn-header">
+            <div id="jsn-logo" class="pull-left">
+                            <div id="jsn-pos-logo">
+                    <div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent">
+<div  >
+    <img src="http://costi.gov.lk/images/headers/Banner_Re_edited_En.jpg" alt="Banner Re edited En" width="1171" height="80" /></div><div class="clearbreak"></div></div></div></div>
+                </div>
+
+                        </div>
+            <div id="jsn-headerright" class="pull-right">
+                            <div id="jsn-pos-top" class="pull-left">
+                    
+                    <div class="clearbreak"></div>
+                </div>
+                            <div id="jsn-social-icons" class="pull-right">
+                    <ul>
+                                        <li class="facebook">
+                            <a href="http://www.facebook.com/joomlashine" title="Facebook" target="_blank">
+                                Facebook</a>
+                        </li>
+                                        <li class="twitter">
+                            <a href="http://www.twitter.com/joomlashine" title="Twitter" target="_blank">
+                                Twitter</a>
+                        </li>
+                                        <li class="youtube">
+                            <a href="http://www.youtube.com/joomlashine" title="YouTube" target="_blank">
+                                YouTube</a>
+                        </li>
+                                    </ul>
+                </div>
+                        </div>
+            <div class="clearbreak"></div>
+        </div>
+        <div id="jsn-body">
+                    <div id="jsn-menu">
+                            <div id="jsn-pos-mainmenu">
+                    <div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent"><span class="jsn-menu-toggle">Menu</span>
+<ul class="menu-mainmenu">
+<li  class="current active parent first"><a class="current" href="index.html" >
+    <span>
+        Home    </span>
+</a><span class="jsn-menu-toggle"></span><ul><li  class="first"><a  href="home/costi-pledge.html" >
+    <span>
+        COSTI Pledge    </span>
+</a></li><li  class="last"> <a  href="https://ent.lankahost.net:2096/" >
+        <span>
+        E-mail      </span>
+    </a>
+    </li></ul></li><li  class="parent"> <a  href="http://costi.gov.lk/" >
+        <span>
+        About Us        </span>
+    </a>
+    <span class="jsn-menu-toggle"></span><ul><li  class="first"><a  href="about-us/what-is-costi.html" >
+    <span>
+        What is COSTI?  </span>
+</a></li><li ><a  href="about-us/senior-minister-s-message.html" >
+    <span>
+        Senior Minister’s Message   </span>
+</a></li><li ><a  href="about-us/our-vision-mission.html" >
+    <span>
+        Our Mission </span>
+</a></li><li ><a  href="about-us/our-objective.html" >
+    <span>
+        Our Objective   </span>
+</a></li><li  class="last"><a  href="about-us/our-team.html" >
+    <span>
+        Our Team    </span>
+</a></li></ul></li><li  class="parent"> <a  href="http://costi.gov.lk/" >
+        <span>
+        Monitoring      </span>
+    </a>
+    <span class="jsn-menu-toggle"></span><ul><li  class="first"><a  href="monitoring/research-community.html" >
+    <span>
+        Research Community  </span>
+</a></li><li ><a  href="monitoring/network.html" >
+    <span>
+        Network </span>
+</a></li><li  class="last"><a  href="monitoring/statistics.html" >
+    <span>
+        Statistics  </span>
+</a></li></ul></li><li  class="parent"> <a  href="http://costi.gov.lk/" >
+        <span>
+        News & Media        </span>
+    </a>
+    <span class="jsn-menu-toggle"></span><ul><li  class="first"><a  href="news-media/news.html" >
+    <span>
+        News    </span>
+</a></li><li  class="parent"><a  href="news-media/events.html" >
+    <span>
+        Events  </span>
+</a><ul><li  class="first last"><a class="" href="news-media/events/biotech-conference.html" target="_blank" >
+    <span>
+        Biotech Conference  </span>
+</a></li></ul></li><li  class="parent last">    <a  href="http://costi.gov.lk/" >
+        <span>
+        Workshop        </span>
+    </a>
+    <ul><li  class="parent first last"><a  href="news-media/workshop/workshop-on-future-earth.html" >
+    <span>
+        Workshop on Future Earth    </span>
+</a><ul><li  class="first"><a  href="news-media/workshop/workshop-on-future-earth/slideshows.html" >
+    <span>
+        Slideshows  </span>
+</a></li><li  class="last"><a  href="news-media/workshop/workshop-on-future-earth/future-earth-report.html" >
+    <span>
+        Future Earth Report </span>
+</a></li></ul></li><li  class="last"><a  href="news-media/workshop/workshop-establishment-of-science-center.html" >
+    <span>
+        Workshop-Science Center     </span>
+</a></li></ul></li></ul></li><li  class="parent">   <a  href="http://costi.gov.lk/" >
+        <span>
+        Coordinating        </span>
+    </a>
+    <span class="jsn-menu-toggle"></span><ul><li  class="first"><a  href="coordinating/coordination-framework.html" >
+    <span>
+        Coordination Framework  </span>
+</a></li><li ><a  href="coordinating/industry-sectors.html" >
+    <span>
+        Industry Sectors    </span>
+</a></li><li  class="last"><a  href="coordinating/costi-meeting-room-reservations.html" >
+    <span>
+        COSTI Meeting Room Reservations </span>
+</a></li></ul></li><li  class="parent"> <a  href="http://costi.gov.lk/" >
+        <span>
+        Downloads       </span>
+    </a>
+    <span class="jsn-menu-toggle"></span><ul><li  class="first"><a  href="downloads/questionnaire.html" >
+    <span>
+        Questionnaire   </span>
+</a></li><li ><a  href="downloads/publications.html" >
+    <span>
+        Publications    </span>
+</a></li><li  class="last"><a  href="downloads/workshop-slides.html" >
+    <span>
+        Workshop Slides </span>
+</a></li></ul></li><li  class="parent"> <a  href="http://costi.gov.lk/" >
+        <span>
+        Procurement     </span>
+    </a>
+    <span class="jsn-menu-toggle"></span><ul><li  class="first"><a  href="procurement/goods-services.html" >
+    <span>
+        Goods & Services    </span>
+</a></li><li  class="last"><a  href="procurement/consultancy.html" >
+    <span>
+        Consultancy </span>
+</a></li></ul></li><li  class="parent"> <a  href="http://costi.gov.lk/" >
+        <span>
+        Contacts        </span>
+    </a>
+    <span class="jsn-menu-toggle"></span><ul><li  class="first"><a  href="contacts/location.html" >
+    <span>
+        Location    </span>
+</a></li><li  class="last"><a  href="contacts/contact-us.html" >
+    <span>
+        Contact us  </span>
+</a></li></ul></li>
+<li>    <a  href="InnovationDashboard.jag" >
+        <span>
+        Innovation Dashboard</span>
+    </a>
+</li>
+</ul><div class="clearbreak"></div></div></div></div>
+                </div>
+                                        <div id="jsn-sitetoolspanel" class="jsn-include-color pull-right">
+                    <ul id="jsn-sitetools-menu">
+                        <li class="clearafter jsn-sitetool-control">
+                        <a href="javascript:void(0)"></a>
+                            <ul>
+                                <li class="clearafter jsn-selector-color">
+                                                        <a id="jsn-selector-blue" title="Select color: Blue" href="#" onclick="javascript: JSNUtils.setTemplateAttribute('jsn_epic_pro_','color','blue'); return false;" ></a>
+                                                        <a id="jsn-selector-red" title="Select color: Red" href="#" onclick="javascript: JSNUtils.setTemplateAttribute('jsn_epic_pro_','color','red'); return false;" ></a>
+                                                        <a id="jsn-selector-green" title="Select color: Green" href="#" onclick="javascript: JSNUtils.setTemplateAttribute('jsn_epic_pro_','color','green'); return false;"  class="current"></a>
+                                                        <a id="jsn-selector-violet" title="Select color: Violet" href="#" onclick="javascript: JSNUtils.setTemplateAttribute('jsn_epic_pro_','color','violet'); return false;" ></a>
+                                                        <a id="jsn-selector-orange" title="Select color: Orange" href="#" onclick="javascript: JSNUtils.setTemplateAttribute('jsn_epic_pro_','color','orange'); return false;" ></a>
+                                                        <a id="jsn-selector-grey" title="Select color: Grey" href="#" onclick="javascript: JSNUtils.setTemplateAttribute('jsn_epic_pro_','color','grey'); return false;" ></a>
+                                                    </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                            <span id="jsn-desktopswitch">
+                    <a href="#" onclick="javascript: JSNUtils.setTemplateAttribute('jsn_epic_pro_','mobile','no'); return false;"></a>
+                </span>
+                <span id="jsn-mobileswitch">
+                    <a href="#" onclick="javascript: JSNUtils.setTemplateAttribute('jsn_epic_pro_','mobile','yes'); return false;"></a>
+                </span>
+                            <div id="jsn-pos-toolbar">
+                    <div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent"><div class="mod-languages">
+
+    <ul class="lang-inline">
+                        <li class="lang-active">
+            <a href="index.html">
+                            <img src="http://costi.gov.lk/media/mod_falang/images/en.gif" alt="English (UK)" title="English (UK)" />                        </a>
+            </li>
+                                <li class="">
+            <a href="http://costi.gov.lk/index.php/id/">
+                            <img src="http://costi.gov.lk/media/mod_falang/images/id.gif" alt="Tamil" title="Tamil" />                      </a>
+            </li>
+                                <li class="">
+            <a href="http://costi.gov.lk/index.php/sv/">
+                            <img src="http://costi.gov.lk/media/mod_falang/images/sv.gif" alt="Sinhala" title="Sinhala" />                      </a>
+            </li>
+                </ul>
+
+</div>
+<div class="clearbreak"></div></div></div></div>
+                </div>
+                        <div class="clearbreak"></div>
+            </div>
+                    <div id="jsn-content-top" class="jsn-haspromoright ">
+                <div id="jsn-promo" class="row-fluid">
+                                <div id="jsn-pos-promo" class="span9 order1 ">
+                        <div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div><div><div class="jsn-modulecontent"><!-- JSN IMAGESHOW PRO STANDARD 4.8.6 - Theme Slider 1.1.9 --><div class="jsn-container"><div class="jsn-gallery"><div id="jsn-themeslider-skitter-4LpgR"><div style="width: 100%; height: 250px;" class="box_skitter jsn-themeslider-gallery jsn-themeslider-skitter-4LpgR">
+<ul><li>
+                        <a href="javascript:void(0);" >
+                            <img src="http://costi.gov.lk/images/banners/EnergySecurity_September_2014_WebBanner.jpg" alt="ROUNDTABLE DISCUSSION ON ENERGY SECURITY..."/>
+                        </a>
+                        <div class="label_text"><p class="jsn-themeslider-caption-title">ROUNDTABLE DISCUSSION ON ENERGY SECURITY...</p></div>
+                     </li><li>
+                        <a href="javascript:void(0);" >
+                            <img src="http://costi.gov.lk/images/banners/webbannersmall.jpg" alt="BRAINSTORMING SESSION - ROLE OF TECHNOLOGY IN BALANCED PROVINCIAL DEVELOPMENT..."/>
+                        </a>
+                        <div class="label_text"><p class="jsn-themeslider-caption-title">BRAINSTORMING SESSION - ROLE OF TECHNOLOGY IN BALANCED PROVINCIAL DEVELOPMENT...</p></div>
+                     </li><li>
+                        <a href="javascript:void(0);" >
+                            <img src="http://costi.gov.lk/images/banners/Green_Economy_Web_banner_August26_2014.jpg" alt="ROUND TABLE DISCUSSION ON ENABLING TRANSITION TOWARDS A GREEN ECONOMY..."/>
+                        </a>
+                        <div class="label_text"><p class="jsn-themeslider-caption-title">ROUND TABLE DISCUSSION ON ENABLING TRANSITION TOWARDS A GREEN ECONOMY...</p></div>
+                     </li><li>
+                        <a href="javascript:void(0);" >
+                            <img src="http://costi.gov.lk/images/headers/Bio_Resources_Web_Banner.jpg" alt="COORDINATING WORKSHOP ON HARNESSING BIOLOGICAL RESOURCES FOR ECONOMIC DEVELOPMENT..."/>
+                        </a>
+                        <div class="label_text"><p class="jsn-themeslider-caption-title">COORDINATING WORKSHOP ON HARNESSING BIOLOGICAL RESOURCES FOR ECONOMIC DEVELOPMENT...</p></div>
+                     </li><li>
+                        <a href="javascript:void(0);" >
+                            <img src="http://costi.gov.lk/images/headers/Fishing_Boat_Webbanner4.jpg" alt="ROUND TABLE DISCUSSION ON DEVELOPING AN ADVANCED MARINE CRAFT FOR DEEP SEA FISHING..."/>
+                        </a>
+                        <div class="label_text"><p class="jsn-themeslider-caption-title">ROUND TABLE DISCUSSION ON DEVELOPING AN ADVANCED MARINE CRAFT FOR DEEP SEA FISHING...</p></div>
+                     </li><li>
+                        <a href="javascript:void(0);" >
+                            <img src="http://costi.gov.lk/images/headers/banner5.jpg" alt="COSTI ROUNDTABLE DISCUSSION SERIES II : VALUE ADDITION TO CLAY..."/>
+                        </a>
+                        <div class="label_text"><p class="jsn-themeslider-caption-title">COSTI ROUNDTABLE DISCUSSION SERIES II : VALUE ADDITION TO CLAY...</p></div>
+                     </li><li>
+                        <a href="javascript:void(0);" >
+                            <img src="http://costi.gov.lk/images/headers/Nanotech_Banner.jpg" alt="WORLD CLASS NATIONAL RESEARCH AND INNOVATION ECOSYSTEM..."/>
+                        </a>
+                        <div class="label_text"><p class="jsn-themeslider-caption-title">WORLD CLASS NATIONAL RESEARCH AND INNOVATION ECOSYSTEM...</p></div>
+                     </li><li>
+                        <a href="javascript:void(0);" >
+                            <img src="http://costi.gov.lk/images/headers/Knowledge.jpg" alt="KNOWEDGE COMMUNITY FOR ECONOMIC PROSPERITY..."/>
+                        </a>
+                        <div class="label_text"><p class="jsn-themeslider-caption-title">KNOWEDGE COMMUNITY FOR ECONOMIC PROSPERITY...</p></div>
+                     </li><li>
+                        <a href="javascript:void(0);" >
+                            <img src="http://costi.gov.lk/images/headers/coordinate.jpg" alt="COORDINATE WITH THINKING MONITORING WITH EMPATHY..."/>
+                        </a>
+                        <div class="label_text"><p class="jsn-themeslider-caption-title">COORDINATE WITH THINKING MONITORING WITH EMPATHY...</p></div>
+                     </li><li>
+                        <a href="javascript:void(0);" >
+                            <img src="http://costi.gov.lk/images/headers/Sigiriya_Banner.jpg" alt="BE INSPIRED FROM THE PAST…"/>
+                        </a>
+                        <div class="label_text"><p class="jsn-themeslider-caption-title">BE INSPIRED FROM THE PAST…</p></div>
+                     </li><li>
+                        <a href="javascript:void(0);" >
+                            <img src="http://costi.gov.lk/images/headers/EconomicHUB.jpg" alt="MAKING SRILANKA AN ECONOMIC POWERHOUSE..."/>
+                        </a>
+                        <div class="label_text"><p class="jsn-themeslider-caption-title">MAKING SRILANKA AN ECONOMIC POWERHOUSE...</p></div>
+                     </li></ul><input type="hidden" class="cache_skitter_index" value="" /></div>
+</div><script type="text/javascript">
+                        jsnThemeSliderjQuery(function() {
+                        jsnThemeSliderjQuery(document).ready(function(){
+                            
+                            var oldHTML = jsnThemeSliderjQuery('#jsn-themeslider-skitter-4LpgR').html();
+                            var options = {"animation":"random","navigation":true,"navShowOnMouseOver":true,"dots":false,"numbers":true,"numbers_align":"right","caption_title_css":"font-family: Verdana;\r\nfont-size: 12px;\r\nfont-weight: bold;\r\ntext-align: left;\r\ncolor: #E9E9E9;","caption_description_css":"font-family: Arial;\r\nfont-size: 11px;\r\nfont-weight: normal;\r\ntext-align: left;\r\ncolor: #AFAFAF;","caption_link_css":"font-family: Verdana;\r\nfont-size: 11px;\r\nfont-weight: bold;\r\ntext-align: right;\r\ncolor: #E06614;","caption_position":"bottom","caption_caption_opacity":"filter:alpha(opacity=75);opacity: 0.75;","interval":6000,"controls":false,"stop_over":true,"auto_play":true,"caption_title_show":true,"caption_description_show":true,"caption_link_show":false,"label":true,"animateNumberActive":{"backgroundColor":"#CC3333","color":"#fff"},"click_action":"no_action","open_link_in":"current_browser","img_transparent_background":false,"skitter_class_id":"jsn-themeslider-skitter-4LpgR"};
+                            options.base_height = 250;
+                            jsnThemeSliderjQuery('.jsn-themeslider-skitter-4LpgR').skitter(options);
+                            jsnThemeSliderjQuery('.jsn-themeslider-skitter-4LpgR .image_main').css("max-width", "");
+                            var jsn_4LpgR = jsnThemeSliderjQuery(window).width();
+                            var cacheResize;
+                            jsnThemeSliderjQuery(window).resize(function (e) {
+                                if (jsn_4LpgR != jsnThemeSliderjQuery(window).width())
+                                {
+                                    clearTimeout(cacheResize);
+                                    cacheResize = "";
+                                    var oldCacheIndex = jsnThemeSliderjQuery('#jsn-themeslider-skitter-4LpgR .cache_skitter_index').attr('value');
+                                    jsnThemeSliderjQuery('#jsn-themeslider-skitter-4LpgR').html(oldHTML);
+                                    
+                                    jsnThemeSliderjQuery('#jsn-themeslider-skitter-4LpgR .cache_skitter_index').attr('value', oldCacheIndex);
+                                    var options = {"animation":"random","navigation":true,"navShowOnMouseOver":true,"dots":false,"numbers":true,"numbers_align":"right","caption_title_css":"font-family: Verdana;\r\nfont-size: 12px;\r\nfont-weight: bold;\r\ntext-align: left;\r\ncolor: #E9E9E9;","caption_description_css":"font-family: Arial;\r\nfont-size: 11px;\r\nfont-weight: normal;\r\ntext-align: left;\r\ncolor: #AFAFAF;","caption_link_css":"font-family: Verdana;\r\nfont-size: 11px;\r\nfont-weight: bold;\r\ntext-align: right;\r\ncolor: #E06614;","caption_position":"bottom","caption_caption_opacity":"filter:alpha(opacity=75);opacity: 0.75;","interval":6000,"controls":false,"stop_over":true,"auto_play":true,"caption_title_show":true,"caption_description_show":true,"caption_link_show":false,"label":true,"animateNumberActive":{"backgroundColor":"#CC3333","color":"#fff"},"click_action":"no_action","open_link_in":"current_browser","img_transparent_background":false,"skitter_class_id":"jsn-themeslider-skitter-4LpgR"};
+                                    options.base_height = 250;
+                                    cacheResize = setTimeout(function () {
+                                        jsnThemeSliderjQuery('.jsn-themeslider-skitter-4LpgR').skitter(options);
+                                        jsnThemeSliderjQuery('.jsn-themeslider-skitter-4LpgR .image_main').css("max-width", "");
+                                    }, 500);
+                                    jsn_4LpgR = jsnThemeSliderjQuery(window).width();
+                                }
+                            });
+                        })});
+                </script><div class="jsn-themeslider-seocontent">
+<div><p>COSTI SLIDE</p><p></p><ul><li><p>ROUNDTABLE DISCUSSION ON ENERGY SECURITY...</p><p><a href="../../images/banners/EnergySecurity_September_2014_WebBanner.jpg">https://costi.gov.lk/images/banners/EnergySecurity_September_2014_WebBanner.jpg</a></p></li><li><p>BRAINSTORMING SESSION - ROLE OF TECHNOLOGY IN BALANCED PROVINCIAL DEVELOPMENT...</p><p><a href="../../images/banners/webbannersmall.jpg">https://costi.gov.lk/images/banners/webbannersmall.jpg</a></p></li><li><p>ROUND TABLE DISCUSSION ON ENABLING TRANSITION TOWARDS A GREEN ECONOMY...</p><p><a href="../../images/banners/Green_Economy_Web_banner_August26_2014.jpg">https://costi.gov.lk/images/banners/Green_Economy_Web_banner_August26_2014.jpg</a></p></li><li><p>COORDINATING WORKSHOP ON HARNESSING BIOLOGICAL RESOURCES FOR ECONOMIC DEVELOPMENT...</p><p><a href="../../images/headers/Bio_Resources_Web_Banner.jpg">https://costi.gov.lk/images/headers/Bio_Resources_Web_Banner.jpg</a></p></li><li><p>ROUND TABLE DISCUSSION ON DEVELOPING AN ADVANCED MARINE CRAFT FOR DEEP SEA FISHING...</p><p><a href="../../images/headers/Fishing_Boat_Webbanner4.jpg">https://costi.gov.lk/images/headers/Fishing_Boat_Webbanner4.jpg</a></p></li><li><p>COSTI ROUNDTABLE DISCUSSION SERIES II : VALUE ADDITION TO CLAY...</p><p><a href="../../images/headers/banner5.jpg">https://costi.gov.lk/images/headers/banner5.jpg</a></p></li><li><p>WORLD CLASS NATIONAL RESEARCH AND INNOVATION ECOSYSTEM...</p><p><a href="../../future/images/headers/Nanotech_Banner.jpg">http://costi.gov.lk/future/images/headers/Nanotech_Banner.jpg</a></p></li><li><p>KNOWEDGE COMMUNITY FOR ECONOMIC PROSPERITY...</p><p><a href="../../future/images/headers/Knowledge.jpg">http://costi.gov.lk/future/images/headers/Knowledge.jpg</a></p></li><li><p>COORDINATE WITH THINKING MONITORING WITH EMPATHY...</p><p><a href="../../future/images/headers/coordinate.jpg">http://costi.gov.lk/future/images/headers/coordinate.jpg</a></p></li><li><p>BE INSPIRED FROM THE PAST…</p><p><a href="../../future/images/headers/Sigiriya_Banner.jpg">http://costi.gov.lk/future/images/headers/Sigiriya_Banner.jpg</a></p></li><li><p>MAKING SRILANKA AN ECONOMIC POWERHOUSE...</p><p><a href="../../future/images/headers/EconomicHUB.jpg">http://costi.gov.lk/future/images/headers/EconomicHUB.jpg</a></p></li></ul></div></div>
+</div></div><div class="clearbreak"></div></div></div></div></div></div>
+                    </div>
+                                <div id="jsn-pos-promo-right" class="span3 order2 ">
+                        <div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">What is COSTI?</span></h3><div class="jsn-modulecontent">
+<div  >
+    <p style="text-align: justify;"><span style="font-size: 12pt; line-height: 115%; font-family: 'Times New Roman','serif';">The Coordinating Secretariat for Science, Technology and Innovation (COSTI) was established on February 1, 2013 as mandated by the cabinet decision of September 9, 2011 with the specific aim of coordination and monitoring of Science, </span><br /><a href="about-us/what-is-costi.html">Read more...</a></p></div><div class="clearbreak"></div></div></div></div></div></div>
+                    </div>
+                                <div class="clearbreak"></div>
+                </div>
+                        </div>
+                    <div id="jsn-content" class="jsn-hasleft jsn-hasright ">
+                <div id="jsn-content_inner"><div id="jsn-content_inner1"><div id="jsn-content_inner2"><div id="jsn-content_inner3"><div id="jsn-content_inner4"><div id="jsn-content_inner5"><div id="jsn-content_inner6"><div id="jsn-content_inner7" class="row-fluid">
+                        <div id="jsn-maincontent" class="span6 order2 offset3 row-fluid">
+                    <div id="jsn-maincontent_inner"><div id="jsn-maincontent_inner1"><div id="jsn-maincontent_inner2"><div id="jsn-maincontent_inner3"><div id="jsn-maincontent_inner4">
+                                <div id="jsn-centercol" class="span12 order1 "><div id="jsn-centercol_inner">
+                                    <div id="jsn-breadcrumbs">
+                                    <div id="jsn-pos-breadcrumbs" class="">
+<ul class="breadcrumb ">
+<li><span>Home</span></li></ul> 
+</div>
+                                </div>
+                                    <div id="jsn-pos-user-top" class="jsn-modulescontainer jsn-horizontallayout jsn-modulescontainer2 row-fluid">
+                                    <div class=" jsn-modulecontainer span6"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">Senior Minister's Message</span></h3><div class="jsn-modulecontent">
+<div  >
+    <p><img style="border: 2px solid #d3caca;" src="http://costi.gov.lk/images/sm/sm.jpg" alt="sm" width="210" height="100" /><br />Economic Development is a "War", as stated by the President in Mahinda Chintana, because goods and services produced in Sri Lanka have to complete with those from abroad in both the local and foreign markets. If our products fail to be sold then our enterprises will collapse and we will be defeated in the economic war.</p>
+<p><a href="about-us/senior-minister-s-message.html">Read More....</a></p></div><div class="clearbreak"></div></div></div></div></div></div><div class=" jsn-modulecontainer span6"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">Coordinating Framework</span></h3><div class="jsn-modulecontent">
+<div  >
+    <div class="breadcrumbs" style="text-align: justify;"><img style="border: 2px solid #d3caca;" src="http://costi.gov.lk/images/sm/framwork_homepage_2.jpg" alt="framwork homepage 2" width="210" height="100" /><br /><span style="font-size: 8pt;">FORWORD TO THE COORDINATING AND MONITORING FRAMEWORK</span></div>
+<div class="breadcrumbs" style="text-align: justify;">"The Cabinet decided at the same time that to ensure proper coordination among line ministries within overall budgetary framework, and also with the private sector, to appoint a Committee of Officials comprising of Secretaries to HE the</div>
+<div class="breadcrumbs" style="text-align: justify;">&nbsp;</div>
+<div id="__tbSetup"><a href="coordinating/coordination-framework.html">Read More...</a></div></div><div class="clearbreak"></div></div></div></div></div></div>
+                                </div>
+                                    <div id="jsn-mainbody-content" class=" jsn-hasmainbodytop jsn-hasmainbody">
+                                            <div id="jsn-pos-mainbody-top" class="jsn-modulescontainer jsn-horizontallayout jsn-modulescontainer1 row-fluid">
+                                        <div class=" jsn-modulecontainer span12"><div class="jsn-modulecontainer_inner"><div><div><div class="jsn-modulecontent">
+<div  >
+    <p style="text-align: center;"><span style="font-size: 12pt; background-color: #ffffff;">Value of IPR and R&amp;D investments</span></p>
+<p style="text-align: justify;">Today on the interntional Stock Exchange the top companies are knowledge-based companies which are valued by the investors at a much higher level than their actual net worth or assest. Their assets are now bound-up in intangibles such as creativity, knowledge and human skills.</p>
+<p style="text-align: justify;">The highest value companies include Microsoft, Intel,Merck,Cisco, IBM and Disny, many of which hardly existed twenty years ago. They are all characterized by their IPR ( Intellectual Property Rights ) and knowledge content.</p></div><div class="clearbreak"></div></div></div></div></div></div>
+                                    </div>
+                                            <div id="jsn-mainbody">
+                                        
+<div id="system-message-container">
+<div id="system-message">
+</div>
+</div>
+                                        <div class="blog-featured">
+
+
+
+
+</div>
+
+                                    </div>
+                                        </div>
+                                </div></div> <!-- end centercol -->
+                        </div></div></div></div></div></div> <!-- end jsn-maincontent -->
+                            <div id="jsn-leftsidecontent" class="span3 order1 offset-9">
+                        <div id="jsn-leftsidecontent_inner">
+                            <div id="jsn-pos-left">
+                                <div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">Biotech Conference</span></h3><div class="jsn-modulecontent">
+<div  >
+    <p><a href="news-media/events/biotech-conference.html" target="_blank"><img src="http://costi.gov.lk/images/module_images/Front_Web_icon.png" alt="Front Web icon" width="235" height="116" /></a></p></div><div class="clearbreak"></div></div></div></div></div></div><div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">Lost Oppertunities</span></h3><div class="jsn-modulecontent">
+<div  >
+    <a href="lostopportunities.html"><img src="http://costi.gov.lk/images/lost_Opps.png" alt="lost Opps" width="235" height="116" /></a></div><div class="clearbreak"></div></div></div></div></div></div><div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">Vidusara Cartoon</span></h3><div class="jsn-modulecontent">
+<div  >
+    <p><a href="http://www.vidusara.com/" target="_blank">&nbsp;<img src="http://costi.gov.lk/images/module_images/Vidusara_Cartoonpng.png" alt="Vidusara Cartoonpng" width="235" height="116" /></a></p></div><div class="clearbreak"></div></div></div></div></div></div><div class="box-grey jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">Coordinated Activities</span></h3><div class="jsn-modulecontent"><span class="jsn-menu-toggle">Menu</span>
+<ul class="menu-treemenu">
+<li  class="first"><a  href="InnovationDashboard.htm" >
+    <span>
+        Innovation Dashboard    </span>
+</a></li><li ><a  href="" >
+    <span>
+        Virtual Institutes  </span>
+</a></li><li ><a  href="2011-03-31-04-24-11.html" >
+    <span>
+        National Survey </span>
+</a></li><li  class="last"><a  href="2011-03-31-04-24-46.html" >
+    <span>
+        Industry Sectors    </span>
+</a></li></ul><div class="clearbreak"></div></div></div></div></div></div><div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">Five Year Strategy Ebook</span></h3><div class="jsn-modulecontent">
+<div  >
+    <p><a href="32-uncategorised/ebook.pdf"><img src="http://costi.gov.lk/images/ebook.png" alt="ebook" width="235" height="116" /></a></p></div><div class="clearbreak"></div></div></div></div></div></div>
+                            </div>
+                        </div>
+                    </div>
+                            <div id="jsn-rightsidecontent" class="span3 order3 ">
+                        <div id="jsn-rightsidecontent_inner">
+                            <div id="jsn-pos-right">
+                                <div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">STI Events Calander</span></h3><div class="jsn-modulecontent">
+<div  >
+    <a href="calander.html"><img src="http://costi.gov.lk/images/image_sti_events/front_for_web.png" alt="front for web" width="235" height="116" /></a></div><div class="clearbreak"></div></div></div></div></div></div><div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">Innovation Eye</span></h3><div class="jsn-modulecontent">
+<div  >
+    <p><a href="innovation_eye_August_2014.pdf"><img src="http://costi.gov.lk/images/module_images/Newsetter_August2014_Download_icon_2.png" alt="Newsetter August2014 Download icon 2" width="235" height="116" /></a></p></div><div class="clearbreak"></div></div></div></div></div></div><div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">SLIDESHOW</span></h3><div class="jsn-modulecontent">
+<div  >
+    <a href="slideshow.html"><img src="http://costi.gov.lk/images/slideshow_Icon2_png.png" alt="slideshow Icon2 png" width="235" height="116" /></a>
+<p>&nbsp;</p></div><div class="clearbreak"></div></div></div></div></div></div><div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">Events Calendar</span></h3><div class="jsn-modulecontent">   <script   type="text/javascript" ><!--
+    function navLoaded(elem, modid){
+        var myspan = document.getElementById("testspan"+modid);
+        var modbody = myspan.parentNode;
+        modbody.innerHTML=elem.innerHTML;
+    }
+    function callNavigation(link){
+        var body = document.getElementsByTagName('body')[0];
+        if (!document.getElementById('calnav')){
+            myiframe = document.createElement('iframe');
+            myiframe.setAttribute("name","calnav");
+            myiframe.setAttribute("id","calnav");
+            myiframe.style.display = "none";
+            body.appendChild(myiframe);
+        }
+        else {
+            myiframe = document.getElementById('calnav');
+        }
+        myiframe.setAttribute("src",link);
+    }
+    //--></script>
+    <div style="margin:0px;padding:0px;border-width:0px;"><span id='testspan157' style='display:none'></span>
+
+<table style="width:140px;" cellpadding="0" cellspacing="0" align="center" class="mod_events_monthyear" >
+<tr >
+<td><div class="mod_events_link" onmousedown="callNavigation('indexe831.html?option=com_jevents&amp;task=modcal.ajax&amp;day=1&amp;month=09&amp;year=2013&amp;modid=157&amp;tmpl=component');">&laquo;</div>
+</td><td><div class="mod_events_link" onmousedown="callNavigation('indexd539.html?option=com_jevents&amp;task=modcal.ajax&amp;day=1&amp;month=08&amp;year=2014&amp;modid=157&amp;tmpl=component');">&lt;</div>
+</td><td align="center"><a href="#" class = "mod_events_link" title = "Go to calendar - current month" onclick = "window.location.href='/index.php/en/component/jevents/month.calendar/2014/09/22/-';return false;">September</a> <a href="#" class = "mod_events_link" title = "Go to calendar - current year" onclick = "window.location.href='/index.php/en/component/jevents/year.listevents/2014/09/22/-';return false;">2014</a> </td><td><div class="mod_events_link" onmousedown="callNavigation('indexe1ea.html?option=com_jevents&amp;task=modcal.ajax&amp;day=1&amp;month=10&amp;year=2014&amp;modid=157&amp;tmpl=component');">&gt;</div>
+</td><td><div class="mod_events_link" onmousedown="callNavigation('index3e54.html?option=com_jevents&amp;task=modcal.ajax&amp;day=1&amp;month=09&amp;year=2015&amp;modid=157&amp;tmpl=component');">&raquo;</div>
+</td></tr>
+</table>
+<table style="width:140px;height:;" align="center" class="mod_events_table" cellspacing="0" cellpadding="2" >
+<tr class="mod_events_dayname">
+<td class="mod_events_td_dayname">M</td>
+<td class="mod_events_td_dayname">T</td>
+<td class="mod_events_td_dayname">W</td>
+<td class="mod_events_td_dayname">T</td>
+<td class="mod_events_td_dayname">F</td>
+<td class="mod_events_td_dayname"><span class="saturday">S</span></td>
+<td class="mod_events_td_dayname"><span class="sunday">S</span></td>
+</tr>
+<tr>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/01/-';return false;">1</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/02/-';return false;">2</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/03/-';return false;">3</a></td>
+<td class='mod_events_td_daywithevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/04/-';return false;">4</a></td>
+<td class='mod_events_td_daywithevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/05/-';return false;">5</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/06/-';return false;">6</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/07/-';return false;">7</a></td>
+</tr>
+<tr>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/08/-';return false;">8</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/09/-';return false;">9</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/10/-';return false;">10</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/11/-';return false;">11</a></td>
+<td class='mod_events_td_daywithevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/12/-';return false;">12</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/13/-';return false;">13</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/14/-';return false;">14</a></td>
+</tr>
+<tr>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/15/-';return false;">15</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/16/-';return false;">16</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/17/-';return false;">17</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/18/-';return false;">18</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/19/-';return false;">19</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/20/-';return false;">20</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/21/-';return false;">21</a></td>
+</tr>
+<tr>
+<td class='mod_events_td_todaynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/22/-';return false;">22</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/23/-';return false;">23</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/24/-';return false;">24</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/25/-';return false;">25</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/26/-';return false;">26</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/27/-';return false;">27</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/28/-';return false;">28</a></td>
+</tr>
+<tr>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/29/-';return false;">29</a></td>
+<td class='mod_events_td_daynoevents'>
+<a href="#" class = "mod_events_daylink" title = "Go to calendar - current day" onclick = "window.location.href='/index.php/en/component/jevents/day.listevents/2014/09/30/-';return false;">30</a></td>
+<td class="mod_events_td_dayoutofmonth">1</td>
+<td class="mod_events_td_dayoutofmonth">2</td>
+<td class="mod_events_td_dayoutofmonth">3</td>
+<td class="mod_events_td_dayoutofmonth">4</td>
+<td class="mod_events_td_dayoutofmonth">5</td>
+</tr>
+</table>
+</div><div class="clearbreak"></div></div></div></div></div></div>
+                            </div>
+                        </div>
+                    </div>
+                        </div></div></div></div></div></div></div></div>
+            </div>
+                    <div id="jsn-content-bottom">
+                            <div id="jsn-pos-content-bottom" class="jsn-modulescontainer jsn-horizontallayout jsn-modulescontainer3 row-fluid">
+                    <div class=" jsn-modulecontainer span4"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">Research Community</span></h3><div class="jsn-modulecontent">
+<div  >
+    <p><img class="image-left image-border" src="COSTI%20-%20Innovation%20Dashboard_files/easy-start-banner.jpg" alt="Easy to start" width="100" height="100" />Our research community consists of all the Sri Lankan scientists. It is a diverse network of interacting scientists which include</p>
+<p><a href="monitoring/research-community.html">Read more...</a></p>
+<div id="__tbSetup">&nbsp;</div></div><div class="clearbreak"></div></div></div></div></div></div><div class=" jsn-modulecontainer span4"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">Statistics</span></h3><div class="jsn-modulecontent">
+<div  >
+    <p><img class="image-left image-border" src="COSTI%20-%20Innovation%20Dashboard_files/docs-support-banner.jpg" alt="Docs / Support" width="100" height="100" border="�" />In order for Sri Lankan industries to remain competitive in the local and global markets they have to continuously innovate.</p>
+<p><a href="monitoring/statistics.html">Read More...</a></p>
+<p>&nbsp;</p>
+<div id="__tbSetup">&nbsp;</div></div><div class="clearbreak"></div></div></div></div></div></div><div class=" jsn-modulecontainer span4"><div class="jsn-modulecontainer_inner"><div><div><h3 class="jsn-moduletitle"><span class="jsn-moduleicon">Establishing a Network of Science Parks</span></h3><div class="jsn-modulecontent">
+<div  >
+    <p><img class="image-border image-left" src="COSTI%20-%20Innovation%20Dashboard_files/rtl-support-banner.jpg" alt="Native RTL Support" width="100" height="100" border="�" />It is proposed to develop a network of science/ research parks as public-private partnerships in Sri Lanka in a.</p>
+<p><a href="monitoring/network.html">Read more...</a></p>
+<div id="__tbSetup">&nbsp;</div></div><div class="clearbreak"></div></div></div></div></div></div>
+                </div>
+                            <div id="jsn-usermodules3" class="jsn-modulescontainer jsn-modulescontainer1 row-fluid">
+                                <div id="jsn-pos-user7" class="span12 order1 ">
+                        <div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div><div><div class="jsn-modulecontent">
+<div  >
+    </div><div class="clearbreak"></div></div></div></div></div></div>
+                    </div>
+                                            </div>
+                        </div>
+                </div>
+                    <div id="jsn-footer">
+                <div id="jsn-footermodules" class="jsn-modulescontainer jsn-modulescontainer2 row-fluid">
+                                <div id="jsn-pos-footer" class="span6">
+                        <div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent">
+<div  >
+    <p>2013 © COSTI. All Rights Reserved.</p></div><div class="clearbreak"></div></div></div></div>
+                    </div>
+                                <div id="jsn-pos-bottom" class="span6">
+                        <div class=" jsn-modulecontainer"><div class="jsn-modulecontainer_inner"><div class="jsn-modulecontent">  
+<div  >
+    <a title="Facebook" href="https://www.facebook.com/STandIcoordinatingsecretariat?ref=hl" target="_blank"><img title="Facebook" src="http://costi.gov.lk/images/face.png" alt="face" width="20" height="20" /></a><span style="color: #ffffff;">..<a title="Linkedin" href="http://www.linkedin.com/groups/COSTI-group-Connecting-Science-Technology-4996466?trk=myg_ugrp_ovr" target="_blank"><span style="color: #ffffff;"><img src="http://costi.gov.lk/images/sm/Linkedin.png" alt="Linkedin" width="20" height="20" /></span> </a> </span><span style="color: #ffffff;">&nbsp;</span><span style="color: #000000;"><span style="color: #000000;">&nbsp;</span><a title="Twitter" href="https://twitter.com/costi_sl" target="_blank"><span style="color: #000000;"><img src="http://costi.gov.lk/images/sm/twitter.png" alt="twitter" width="19" height="19" /></span></a><span style="color: #ffffff;">&nbsp;</span><span style="color: #000000;">&nbsp;</span><a title="Youtube" href="http://www.youtube.com/user/costisl" target="_blank"><span style="color: #000000;"><img src="http://costi.gov.lk/images/sm/youtube2.png" alt="youtube2" width="20" height="20" /></span></a><span style="color: #ffffff;">.</span><span style="color: #1682d0;">&nbsp;</span><a title="Blog" href="http://costisl.wordpress.com/" target="_blank"><img src="http://costi.gov.lk/images/sm/blogicon.png" alt="blogicon" width="20" height="20" /> </a>
+    </span></div><div class="clearbreak"></div></div></div></div>
+                    </div>
+                                <div class="clearbreak"></div>
+                </div>
+            </div>
+            </div>
+            <a id="jsn-gotoplink" href="index.html#top">
+            <span>Go to top</span>
+        </a>
+    
+<!-- 
+Le javascript
+==================================================
+Placed at the end of the document so the pages load faster
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/jquery-ui-1.10.1.custom.min.js"></script>
+<script src="js/jquery.gridster.with-extras.min.js"></script>
+<script src="js/handlebars.js"></script>
+<script src="js/shindig.js"></script>
+<script src="js/UESContainer.js"></script>
+<script src="js/portal-dashboard-designer.js"></script>
+ -->
+</body>
+</html>
+
